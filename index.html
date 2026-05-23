@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abednego Omurwa — Daily Command Center</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- Side navigation -->
+<nav class="sidenav">
+  <div class="nav-pip active" data-label="Home"       onclick="goTo('hero')"></div>
+  <div class="nav-pip"        data-label="Schedule"   onclick="goTo('schedule')"></div>
+  <div class="nav-pip"        data-label="Streaks"    onclick="goTo('streaks')"></div>
+  <div class="nav-pip"        data-label="Rewards"    onclick="goTo('rewards')"></div>
+  <div class="nav-pip"        data-label="Finance"    onclick="goTo('finance')"></div>
+  <div class="nav-pip"        data-label="Prayer"     onclick="goTo('prayer')"></div>
+  <div class="nav-pip"        data-label="Motivation" onclick="goTo('motivation')"></div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════ -->
+<header id="hero">
+  <div class="grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-label">Personal Command Center</div>
+  <h1 class="hero-name">
+    <span class="line1">Abednego</span>
+    <span class="line2">Omurwa</span>
+  </h1>
+  <p class="hero-tagline">Discipline &nbsp;&middot;&nbsp; Growth &nbsp;&middot;&nbsp; Faith &nbsp;&middot;&nbsp; Excellence</p>
+  <div class="hero-clock" id="clock">
+    <span id="hh">00</span><span class="colon">:</span><span id="mm">00</span><span class="colon">:</span><span id="ss">00</span>
+  </div>
+  <div class="hero-date" id="dateDisp"></div>
+  <div class="scroll-cue">SCROLL</div>
+</header>
+
+<!-- ══ SCHEDULE ══════════════════════════════════════════════ -->
+<section id="schedule">
+  <div class="sec-label">01 &mdash; Daily Schedule</div>
+
+  <div class="day-ring-row reveal">
+    <div class="ring-wrap">
+      <svg width="80" height="80" viewBox="0 0 80 80">
+        <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
+        <circle id="ringCircle" cx="40" cy="40" r="32" fill="none"
+          stroke="#b8922a" stroke-width="5" stroke-linecap="round"
+          stroke-dasharray="201" stroke-dashoffset="201"
+          style="transition:stroke-dashoffset 1s ease"/>
+      </svg>
+      <div class="ring-label" id="ringPct">0%</div>
+    </div>
+    <div class="ring-info">
+      <h4 id="ringLabel">Day Progress</h4>
+      <p id="ringDetail">Tracking your completed activities</p>
+    </div>
+  </div>
+
+  <div class="active-banner reveal">
+    <div class="live-pill"><div class="live-dot"></div>Currently Active</div>
+    <h3 id="curName">Loading...</h3>
+    <div class="active-time" id="curTime">&nbsp;</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="curFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="schedule-list" id="schedList"></div>
+</section>
+
+<!-- ══ STREAKS ════════════════════════════════════════════════ -->
+<section id="streaks">
+  <div class="sec-label">02 &mdash; Activity Streaks</div>
+  <div class="streaks-grid" id="streakGrid"></div>
+</section>
+
+<!-- ══ REWARDS ════════════════════════════════════════════════ -->
+<section id="rewards">
+  <div class="sec-label">03 &mdash; Consistency Rewards</div>
+  <div class="rewards-grid" id="rewardGrid"></div>
+</section>
+
+<!-- ══ FINANCE ════════════════════════════════════════════════ -->
+<section id="finance">
+  <div class="sec-label">04 &mdash; Financial Strategy &amp; Calculator</div>
+  <div class="finance-grid">
+
+    <!-- Calculator -->
+    <div class="finance-card reveal">
+      <h3>Income Allocator</h3>
+
+      <label class="f-label">Monthly Income (KES)</label>
+      <input class="f-input" id="incomeVal" type="number" placeholder="e.g. 50000" oninput="calcFinance()"/>
+
+      <div class="slider-group">
+        <label class="f-label">Expenses / Needs</label>
+        <div class="slider-row">
+          <input class="f-slider" id="slNeeds" type="range" min="10" max="70" value="50"
+            oninput="syncSlider('slNeeds','pvNeeds'); calcFinance()"/>
+          <span class="slider-pct" id="pvNeeds">50%</span>
+        </div>
+      </div>
+
+      <div class="slider-group">
+        <label class="f-label">Savings</label>
+        <div class="slider-row">
+          <input class="f-slider" id="slSavings" type="range" min="5" max="40" value="20"
+            oninput="syncSlider('slSavings','pvSavings'); calcFinance()"/>
+          <span class="slider-pct" id="pvSavings">20%</span>
+        </div>
+      </div>
+
+      <div class="slider-group">
+        <label class="f-label">Assets / Investments</label>
+        <div class="slider-row">
+          <input class="f-slider" id="slAssets" type="range" min="5" max="40" value="20"
+            oninput="syncSlider('slAssets','pvAssets'); calcFinance()"/>
+          <span class="slider-pct" id="pvAssets">20%</span>
+        </div>
+      </div>
+
+      <div class="slider-group">
+        <label class="f-label">Emergency Fund</label>
+        <div class="slider-row">
+          <input class="f-slider" id="slEmerg" type="range" min="0" max="20" value="10"
+            oninput="syncSlider('slEmerg','pvEmerg'); calcFinance()"/>
+          <span class="slider-pct" id="pvEmerg">10%</span>
+        </div>
+      </div>
+
+      <p class="warn-text" id="pctWarn">Total exceeds 100% — please adjust sliders</p>
+      <button class="calc-btn" onclick="calcFinance()">Calculate</button>
+    </div>
+
+    <!-- Results -->
+    <div class="finance-card reveal">
+      <h3>Your Allocation</h3>
+      <div class="alloc-grid">
+        <div class="alloc-box">
+          <span class="alloc-amount" id="rNeeds">KES 0</span>
+          <span class="alloc-name">Expenses</span>
+          <span class="alloc-pct" id="ppNeeds">50%</span>
+        </div>
+        <div class="alloc-box">
+          <span class="alloc-amount" id="rSavings">KES 0</span>
+          <span class="alloc-name">Savings</span>
+          <span class="alloc-pct" id="ppSavings">20%</span>
+        </div>
+        <div class="alloc-box">
+          <span class="alloc-amount" id="rAssets">KES 0</span>
+          <span class="alloc-name">Assets</span>
+          <span class="alloc-pct" id="ppAssets">20%</span>
+        </div>
+        <div class="alloc-box">
+          <span class="alloc-amount" id="rEmerg">KES 0</span>
+          <span class="alloc-name">Emergency</span>
+          <span class="alloc-pct" id="ppEmerg">10%</span>
+        </div>
+      </div>
+      <div class="donut-row">
+        <svg id="donutSvg" width="100" height="100" viewBox="0 0 100 100"></svg>
+        <div class="legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#b8922a"></div><span class="leg-name">Expenses</span><span class="leg-val" id="lNeeds">50%</span></div>
+          <div class="leg-item"><div class="leg-dot" style="background:#d4a93c"></div><span class="leg-name">Savings</span><span class="leg-val" id="lSavings">20%</span></div>
+          <div class="leg-item"><div class="leg-dot" style="background:#6b5520"></div><span class="leg-name">Assets</span><span class="leg-val" id="lAssets">20%</span></div>
+          <div class="leg-item"><div class="leg-dot" style="background:#4a7c5c"></div><span class="leg-name">Emergency</span><span class="leg-val" id="lEmerg">10%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Money rules -->
+    <div class="finance-card reveal">
+      <h3>Money Rules for Abednego</h3>
+      <div class="rule-item">
+        <h4>Pay Yourself First</h4>
+        <p>The moment income arrives, move savings to a separate account before spending anything. What you don't see, you don't spend.</p>
+      </div>
+      <div class="rule-item">
+        <h4>The 72-Hour Rule</h4>
+        <p>Any non-essential purchase above KES 2,000 — wait 72 hours. Most impulse desires disappear on their own.</p>
+      </div>
+      <div class="rule-item">
+        <h4>Build Emergency Fund First</h4>
+        <p>Target 3–6 months of expenses (KES 50k–150k) in M-Shwari or a money market fund before putting money into assets.</p>
+      </div>
+      <div class="rule-item">
+        <h4>Invest in Assets That Pay You</h4>
+        <p>Skills, digital products, websites, and courses — every shilling you put into an income-generating asset works while you sleep.</p>
+      </div>
+    </div>
+
+    <!-- Savings goals -->
+    <div class="finance-card reveal">
+      <h3>Savings Goals</h3>
+      <div class="goal-row">
+        <div class="goal-top">
+          <span>Emergency Fund</span>
+          <span>KES <span id="g1v">0</span> / 100,000</span>
+        </div>
+        <div class="goal-track"><div class="goal-fill" id="g1f" style="width:0%"></div></div>
+      </div>
+      <div class="goal-row">
+        <div class="goal-top">
+          <span>Tech &amp; Tools</span>
+          <span>KES <span id="g2v">0</span> / 50,000</span>
+        </div>
+        <div class="goal-track"><div class="goal-fill" id="g2f" style="width:0%"></div></div>
+      </div>
+      <div class="goal-row">
+        <div class="goal-top">
+          <span>Business Capital</span>
+          <span>KES <span id="g3v">0</span> / 200,000</span>
+        </div>
+        <div class="goal-track"><div class="goal-fill" id="g3f" style="width:0%"></div></div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);line-height:1.8;margin-top:1rem">
+        Tip: Use M-Shwari for emergency savings (earns interest). Use CIC or Zimele Money Market for mid-term. NSE or a Sacco for long-term assets.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PRAYER ══════════════════════════════════════════════════ -->
+<section id="prayer">
+  <div class="sec-label">05 &mdash; Daily Prayer &amp; Scripture</div>
+  <div class="prayer-box reveal">
+    <p class="verse-text" id="verseText"></p>
+    <p class="verse-ref"  id="verseRef"></p>
+    <div class="verse-nav">
+      <button class="verse-btn" onclick="prevVerse()">Previous</button>
+      <button class="verse-btn" onclick="nextVerse()">Next</button>
+      <button class="verse-btn" onclick="randVerse()">Random</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MOTIVATION ═════════════════════════════════════════════ -->
+<section id="motivation">
+  <div class="sec-label">06 &mdash; Daily Motivation</div>
+  <div class="quote-box reveal">
+    <span class="quote-mark">&ldquo;</span>
+    <p class="quote-text"   id="quoteText"></p>
+    <p class="quote-author" id="quoteAuthor"></p>
+    <div class="quote-nav">
+      <button class="q-btn" onclick="prevQuote()">&#8592;</button>
+      <button class="q-btn" onclick="nextQuote()">&#8594;</button>
+      <div class="q-dots" id="qDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+<footer>
+  <div class="foot-name">Abednego Omurwa</div>
+  <div class="foot-sub">Every day is a step closer to the vision</div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   DATA
+   ═══════════════════════════════════════════════════════ */
+
+const SCHEDULE = [
+  { id:'a0',  start:'05:00', end:'05:30', name:'Prayer & Meditation',     cat:'Spirit'   },
+  { id:'a1',  start:'05:30', end:'06:30', name:'Web Development',         cat:'Dev'      },
+  { id:'a2',  start:'06:30', end:'06:45', name:'Break',                   cat:'Break',   brk:true },
+  { id:'a3',  start:'06:45', end:'07:45', name:'Python (Deep Work)',       cat:'Python'   },
+  { id:'a4',  start:'07:45', end:'08:00', name:'Break',                   cat:'Break',   brk:true },
+  { id:'a5',  start:'08:00', end:'09:00', name:'Cleanliness',             cat:'Health'   },
+  { id:'a6',  start:'09:00', end:'09:15', name:'Break',                   cat:'Break',   brk:true },
+  { id:'a7',  start:'09:15', end:'10:15', name:'Python Practice',         cat:'Python'   },
+  { id:'a8',  start:'10:15', end:'10:30', name:'Break',                   cat:'Break',   brk:true },
+  { id:'a9',  start:'10:30', end:'11:30', name:'Update Groups & Clients', cat:'Business' },
+  { id:'a10', start:'11:30', end:'11:45', name:'Break',                   cat:'Break',   brk:true },
+  { id:'a11', start:'11:45', end:'12:45', name:'Exercise',                cat:'Health'   },
+  { id:'a12', start:'12:45', end:'13:00', name:'Freshen Up',              cat:'Health'   },
+  { id:'a13', start:'13:00', end:'14:00', name:'Lunch & Rest',            cat:'Rest'     },
+  { id:'a14', start:'14:00', end:'15:00', name:'Marketing',               cat:'Business' },
+  { id:'a15', start:'15:00', end:'15:15', name:'Break',                   cat:'Break',   brk:true },
+  { id:'a16', start:'15:15', end:'16:15', name:'Marketing Continuation',  cat:'Business' },
+  { id:'a17', start:'16:15', end:'17:15', name:'Family & Friends',        cat:'Social'   },
+  { id:'a18', start:'17:15', end:'17:30', name:'Break',                   cat:'Break',   brk:true },
+  { id:'a19', start:'17:30', end:'18:00', name:'Communication Skills',    cat:'Growth'   },
+  { id:'a20', start:'18:00', end:'18:30', name:'English Improvement',     cat:'Language' },
+  { id:'a21', start:'18:30', end:'18:45', name:'Break',                   cat:'Break',   brk:true },
+  { id:'a22', start:'18:45', end:'19:15', name:'Learn German',            cat:'Language' },
+  { id:'a23', start:'19:15', end:'19:45', name:'Financial Literacy',      cat:'Growth'   },
+  { id:'a24', start:'19:45', end:'20:15', name:'Life Skills & Business',  cat:'Growth'   },
+  { id:'a25', start:'20:15', end:'20:30', name:'Break',                   cat:'Break',   brk:true },
+  { id:'a26', start:'20:30', end:'21:00', name:'Daily Review',            cat:'Growth'   },
+  { id:'a27', start:'21:00', end:'22:00', name:'Flexible Time',           cat:'Rest'     },
+  { id:'a28', start:'22:00', end:'22:30', name:'Plan Next Day',           cat:'Growth'   },
+  { id:'a29', start:'22:30', end:'23:00', name:'Sleep Preparation',       cat:'Rest'     },
+];
+
+const STREAK_DEFS = [
+  { key:'prayer',    name:'Prayer & Meditation',   ids:['a0'],          target:30 },
+  { key:'webdev',    name:'Web Development',        ids:['a1'],          target:30 },
+  { key:'python',    name:'Python (Deep Work)',     ids:['a3','a7'],     target:21 },
+  { key:'health',    name:'Cleanliness & Exercise', ids:['a5','a11'],    target:21 },
+  { key:'marketing', name:'Marketing',              ids:['a14','a16'],   target:14 },
+  { key:'language',  name:'Languages',              ids:['a20','a22'],   target:21 },
+  { key:'growth',    name:'Personal Growth',        ids:['a19','a23','a24'], target:30 },
+  { key:'review',    name:'Daily Review & Planning',ids:['a26','a28'],   target:14 },
+];
+
+const REWARDS = [
+  { days:3,   title:'Getting Started',      desc:'3 days of consistent routine. The habit is beginning to form.',               gift:'Treat yourself to your favourite meal. You earned it.' },
+  { days:7,   title:'One Full Week',        desc:'7 consecutive days. A week of discipline is building real character.',        gift:'Buy a book you have been wanting. Knowledge compounds.' },
+  { days:14,  title:'Two-Week Warrior',     desc:'14 days straight. Your mornings are no longer a struggle.',                   gift:'Take a half-day off and do something you genuinely enjoy — no guilt.' },
+  { days:21,  title:'Habit Locked In',      desc:'21 days. The routine is now part of who you are.',                            gift:'Invest in a premium online course or development tool.' },
+  { days:30,  title:'The Iron Month',       desc:'30 days of full daily discipline. This is rare. You are not average.',        gift:'Make a major self-investment — laptop, certification, or business software.' },
+  { days:60,  title:'Unstoppable',          desc:'Two months of consistency. You have changed at a deep level.',                gift:'Take a weekend trip. Rest is part of the strategy, not the enemy.' },
+  { days:90,  title:'The 90-Day Standard',  desc:'90 days. You have transformed your life. This is elite-level discipline.',    gift:'Launch your first income stream or purchase your first real asset.' },
+  { days:365, title:'Full Year Champion',   desc:'365 days. An entire year. Abednego, you are a completely different person.',  gift:'Major celebration. A trip, a gift to yourself, and your first serious investment.' },
+];
+
+const VERSES = [
+  { text:'For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.', ref:'Jeremiah 29:11' },
+  { text:'I can do all things through Christ who strengthens me.', ref:'Philippians 4:13' },
+  { text:'Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.', ref:'Joshua 1:9' },
+  { text:'Commit to the Lord whatever you do, and he will establish your plans.', ref:'Proverbs 16:3' },
+  { text:'Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.', ref:'Proverbs 3:5-6' },
+  { text:'But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.', ref:'Isaiah 40:31' },
+  { text:'And we know that in all things God works for the good of those who love him, who have been called according to his purpose.', ref:'Romans 8:28' },
+  { text:'For God has not given us a spirit of fear, but of power and of love and of a sound mind.', ref:'2 Timothy 1:7' },
+  { text:'Delight yourself in the Lord, and he will give you the desires of your heart.', ref:'Psalm 37:4' },
+  { text:'Do not conform to the pattern of this world, but be transformed by the renewing of your mind.', ref:'Romans 12:2' },
+  { text:'The Lord is my shepherd; I shall not want.', ref:'Psalm 23:1' },
+  { text:'Ask and it will be given to you; seek and you will find; knock and the door will be opened to you.', ref:'Matthew 7:7' },
+  { text:'No weapon formed against you shall prosper, and every tongue which rises against you in judgment you shall condemn.', ref:'Isaiah 54:17' },
+  { text:'For we walk by faith, not by sight.', ref:'2 Corinthians 5:7' },
+  { text:'The Lord your God is with you, the Mighty Warrior who saves. He will take great delight in you.', ref:'Zephaniah 3:17' },
+];
+
+const QUOTES = [
+  { text:'Discipline is the bridge between goals and accomplishment.', author:'Jim Rohn' },
+  { text:'Success is not final, failure is not fatal: it is the courage to continue that counts.', author:'Winston Churchill' },
+  { text:'It always seems impossible until it is done.', author:'Nelson Mandela' },
+  { text:'Your time is limited, so do not waste it living someone else\'s life.', author:'Steve Jobs' },
+  { text:'An investment in knowledge pays the best interest.', author:'Benjamin Franklin' },
+  { text:'Do not watch the clock; do what it does. Keep going.', author:'Sam Levenson' },
+  { text:'We are what we repeatedly do. Excellence, then, is not an act, but a habit.', author:'Aristotle' },
+  { text:'Motivation gets you going, but discipline keeps you growing.', author:'John C. Maxwell' },
+  { text:'Formal education will make you a living; self-education will make you a fortune.', author:'Jim Rohn' },
+  { text:'Do not save what is left after spending; instead spend what is left after saving.', author:'Warren Buffett' },
+  { text:'You do not rise to the level of your goals, you fall to the level of your systems.', author:'James Clear' },
+  { text:'Every master was once a disaster.', author:'T. Harv Eker' },
+  { text:'The secret of getting ahead is getting started.', author:'Mark Twain' },
+  { text:'Hard work beats talent when talent does not work hard.', author:'Tim Notke' },
+  { text:'The man who moves a mountain begins by carrying away small stones.', author:'Confucius' },
+  { text:'Success is the sum of small efforts repeated day in and day out.', author:'Robert Collier' },
+  { text:'Rich people have big libraries. Poor people have big televisions.', author:'Jim Rohn' },
+  { text:'The pain of discipline is far less than the pain of regret.', author:'Jim Rohn' },
+];
+
+/* ═══════════════════════════════════════════════════════
+   STATE  (localStorage)
+   ═══════════════════════════════════════════════════════ */
+
+const TODAY = new Date().toISOString().slice(0,10);
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('ao2_state') || '{}'); }
+  catch { return {}; }
+}
+function saveState() { localStorage.setItem('ao2_state', JSON.stringify(ST)); }
+
+let ST = loadState();
+if (!ST.days)    ST.days = {};
+if (!ST.days[TODAY]) ST.days[TODAY] = [];
+if (!ST.streaks) ST.streaks = {};
+STREAK_DEFS.forEach(d => {
+  if (!ST.streaks[d.key]) ST.streaks[d.key] = { count:0, last:null, hist:[] };
+});
+saveState();
+
+function isDone(id) { return ST.days[TODAY].includes(id); }
+
+function setDone(id, val) {
+  if (val && !isDone(id)) {
+    ST.days[TODAY].push(id);
+  } else if (!val) {
+    ST.days[TODAY] = ST.days[TODAY].filter(x => x !== id);
+  }
+  saveState();
+  recalcStreaks();
+}
+
+/* ═══════════════════════════════════════════════════════
+   CLOCK
+   ═══════════════════════════════════════════════════════ */
+
+function tickClock() {
+  const n = new Date();
+  document.getElementById('hh').textContent = String(n.getHours()).padStart(2,'0');
+  document.getElementById('mm').textContent = String(n.getMinutes()).padStart(2,'0');
+  document.getElementById('ss').textContent = String(n.getSeconds()).padStart(2,'0');
+  const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('dateDisp').textContent =
+    days[n.getDay()] + ' · ' + n.getDate() + ' ' + months[n.getMonth()] + ' ' + n.getFullYear();
+}
+setInterval(tickClock, 1000);
+tickClock();
+
+/* ═══════════════════════════════════════════════════════
+   SCHEDULE
+   ═══════════════════════════════════════════════════════ */
+
+function toMins(t) { const [h,m]=t.split(':').map(Number); return h*60+m; }
+function nowMins() { const n=new Date(); return n.getHours()*60+n.getMinutes(); }
+
+function buildSchedule() {
+  const list = document.getElementById('schedList');
+  list.innerHTML = '';
+  const nm = nowMins();
+
+  SCHEDULE.forEach((bl, i) => {
+    const s = toMins(bl.start), e = toMins(bl.end);
+    const active = nm >= s && nm < e;
+    const done   = !bl.brk && isDone(bl.id);
+
+    const row = document.createElement('div');
+    row.id = 'row_' + i;
+    row.className = 'sched-row' +
+      (bl.brk  ? ' is-break'  : '') +
+      (active  ? ' is-active' : '') +
+      (done    ? ' is-done'   : '');
+
+    if (bl.brk) {
+      row.innerHTML = `
+        <span class="sched-time">${bl.start} – ${bl.end}</span>
+        <span class="sched-name" style="color:var(--muted)">${bl.name}</span>`;
+    } else {
+      row.innerHTML = `
+        <span class="sched-time">${bl.start} – ${bl.end}</span>
+        <span class="sched-name">${bl.name}</span>
+        <span class="sched-cat">${bl.cat}</span>
+        <button class="check-btn ${done?'done':''}" onclick="toggleDone(${i})" title="${done?'Unmark':'Mark complete'}">
+          <svg viewBox="0 0 16 16">
+            <path d="M3 8l3.5 3.5L13 5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>`;
+    }
+    list.appendChild(row);
+
+    if (active) updateActiveBanner(bl, s, e, nm);
+  });
+
+  updateRing();
+}
+
+function toggleDone(i) {
+  const bl = SCHEDULE[i];
+  if (bl.brk) return;
+  const nowDone = !isDone(bl.id);
+  setDone(bl.id, nowDone);
+
+  const row = document.getElementById('row_' + i);
+  const btn = row.querySelector('.check-btn');
+  if (nowDone) {
+    row.classList.add('is-done');
+    btn.classList.add('done');
+    showToast(bl.name + ' marked complete');
+  } else {
+    row.classList.remove('is-done');
+    btn.classList.remove('done');
+    showToast(bl.name + ' unmarked');
+  }
+  updateRing();
+  renderRewards();
+}
+
+function updateActiveBanner(bl, s, e, nm) {
+  document.getElementById('curName').textContent = bl.name;
+  document.getElementById('curTime').textContent = bl.start + ' – ' + bl.end;
+  const pct = Math.round(((nm - s) / (e - s)) * 100);
+  document.getElementById('curFill').style.width = pct + '%';
+}
+
+function updateRing() {
+  const nm = nowMins();
+  const dayStart = toMins('05:00'), dayEnd = toMins('23:00');
+  const pct = Math.max(0, Math.min(Math.round((nm - dayStart) / (dayEnd - dayStart) * 100), 100));
+  const circ = 201;
+  document.getElementById('ringCircle').style.strokeDashoffset = circ - (pct / 100) * circ;
+  document.getElementById('ringPct').textContent = pct + '%';
+
+  const doneCt  = SCHEDULE.filter(b => !b.brk && isDone(b.id)).length;
+  const totalCt = SCHEDULE.filter(b => !b.brk).length;
+  document.getElementById('ringLabel').textContent = 'Day Progress — ' + pct + '%';
+  document.getElementById('ringDetail').textContent =
+    doneCt + ' of ' + totalCt + ' activities marked done';
+}
+
+/* refresh active highlight every minute */
+setInterval(() => {
+  const nm = nowMins();
+  SCHEDULE.forEach((bl, i) => {
+    const s = toMins(bl.start), e = toMins(bl.end);
+    const active = nm >= s && nm < e;
+    const row = document.getElementById('row_' + i);
+    if (!row) return;
+    row.classList.toggle('is-active', active);
+    if (active && !bl.brk) updateActiveBanner(bl, s, e, nm);
+  });
+  updateRing();
+}, 60000);
+
+/* ═══════════════════════════════════════════════════════
+   STREAKS
+   ═══════════════════════════════════════════════════════ */
+
+function recalcStreaks() {
+  STREAK_DEFS.forEach(def => {
+    const st = ST.streaks[def.key];
+    const allDone = def.ids.every(id => isDone(id));
+
+    if (allDone && st.last !== TODAY) {
+      const yest = new Date(); yest.setDate(yest.getDate() - 1);
+      const yKey = yest.toISOString().slice(0,10);
+      st.count = st.last === yKey ? st.count + 1 : 1;
+      st.last  = TODAY;
+      if (!st.hist) st.hist = [];
+      if (!st.hist.includes(TODAY)) st.hist.push(TODAY);
+    } else if (!allDone && st.last === TODAY) {
+      st.count = Math.max(0, st.count - 1);
+      const yest = new Date(); yest.setDate(yest.getDate() - 1);
+      st.last = st.count > 0 ? yest.toISOString().slice(0,10) : null;
+      st.hist = (st.hist || []).filter(d => d !== TODAY);
+    }
+  });
+  saveState();
+  renderStreaks();
+}
+
+function renderStreaks() {
+  const grid = document.getElementById('streakGrid');
+  grid.innerHTML = '';
+  STREAK_DEFS.forEach(def => {
+    const st  = ST.streaks[def.key];
+    const cnt = st.count || 0;
+    const pct = Math.min(Math.round((cnt / def.target) * 100), 100);
+
+    // Last 7 days
+    let weekHtml = '';
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const k = d.toISOString().slice(0,10);
+      const cls = k === TODAY ? 'today' : ((st.hist||[]).includes(k) ? 'done' : '');
+      weekHtml += `<div class="week-cell ${cls}"></div>`;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'streak-card reveal';
+    card.innerHTML = `
+      <div class="streak-top">
+        <div>
+          <div class="streak-name">${def.name}</div>
+          <div class="streak-sub">Target: ${def.target} days</div>
+        </div>
+        <div>
+          <div class="streak-num ${cnt===0?'zero':''}">${cnt}</div>
+          <div class="streak-unit">day streak</div>
+        </div>
+      </div>
+      <div class="streak-bar">
+        <div class="streak-bar-fill" style="width:${pct}%"></div>
+      </div>
+      <div class="week-row">${weekHtml}</div>`;
+    grid.appendChild(card);
+  });
+  initReveal();
+}
+
+function maxStreak() {
+  return Math.max(0, ...Object.values(ST.streaks).map(s => s.count || 0));
+}
+
+/* ═══════════════════════════════════════════════════════
+   REWARDS
+   ═══════════════════════════════════════════════════════ */
+
+function renderRewards() {
+  const grid = document.getElementById('rewardGrid');
+  grid.innerHTML = '';
+  const top = maxStreak();
+
+  REWARDS.forEach(r => {
+    const unlocked = top >= r.days;
+    const card = document.createElement('div');
+    card.className = 'reward-card reveal ' + (unlocked ? 'unlocked' : 'locked');
+    card.innerHTML = `
+      <div class="reward-status ${unlocked?'unlocked':'locked'}">${unlocked ? 'UNLOCKED' : 'LOCKED'}</div>
+      <div class="reward-milestone">${r.days}-day milestone</div>
+      <div class="reward-title">${r.title}</div>
+      <p class="reward-desc">${r.desc}</p>
+      ${unlocked
+        ? `<div class="reward-gift">Reward: ${r.gift}</div>`
+        : `<div class="reward-locked-label">Reach a ${r.days}-day streak to unlock</div>`}`;
+    grid.appendChild(card);
+  });
+  initReveal();
+}
+
+/* ═══════════════════════════════════════════════════════
+   FINANCE CALCULATOR
+   ═══════════════════════════════════════════════════════ */
+
+function syncSlider(sid, vid) {
+  document.getElementById(vid).textContent = document.getElementById(sid).value + '%';
+}
+
+function calcFinance() {
+  const income = parseFloat(document.getElementById('incomeVal').value) || 0;
+  const needs  = +document.getElementById('slNeeds').value;
+  const sav    = +document.getElementById('slSavings').value;
+  const ast    = +document.getElementById('slAssets').value;
+  const emg    = +document.getElementById('slEmerg').value;
+  const tot    = needs + sav + ast + emg;
+
+  document.getElementById('pctWarn').style.display = tot > 100 ? 'block' : 'none';
+
+  const fmt = n => 'KES ' + Math.round(n).toLocaleString();
+  document.getElementById('rNeeds').textContent   = fmt(income * needs / 100);
+  document.getElementById('rSavings').textContent = fmt(income * sav  / 100);
+  document.getElementById('rAssets').textContent  = fmt(income * ast  / 100);
+  document.getElementById('rEmerg').textContent   = fmt(income * emg  / 100);
+
+  document.getElementById('ppNeeds').textContent   = needs + '%';
+  document.getElementById('ppSavings').textContent = sav   + '%';
+  document.getElementById('ppAssets').textContent  = ast   + '%';
+  document.getElementById('ppEmerg').textContent   = emg   + '%';
+
+  document.getElementById('lNeeds').textContent   = needs + '%';
+  document.getElementById('lSavings').textContent = sav   + '%';
+  document.getElementById('lAssets').textContent  = ast   + '%';
+  document.getElementById('lEmerg').textContent   = emg   + '%';
+
+  const ms = income * sav / 100;
+  document.getElementById('g1v').textContent = Math.round(ms).toLocaleString();
+  document.getElementById('g2v').textContent = Math.round(ms * 2).toLocaleString();
+  document.getElementById('g3v').textContent = Math.round(ms * 3).toLocaleString();
+  document.getElementById('g1f').style.width = Math.min(ms / 100000 * 100, 100) + '%';
+  document.getElementById('g2f').style.width = Math.min(ms * 2 / 50000 * 100, 100) + '%';
+  document.getElementById('g3f').style.width = Math.min(ms * 3 / 200000 * 100, 100) + '%';
+
+  drawDonut([needs, sav, ast, emg]);
+}
+
+function drawDonut(pcts) {
+  const svg = document.getElementById('donutSvg');
+  svg.innerHTML = '';
+  const cx = 50, cy = 50, r = 35, sw = 12;
+  const colors = ['#b8922a','#d4a93c','#6b5520','#4a7c5c'];
+  const circ = 2 * Math.PI * r;
+  const tot  = pcts.reduce((a,b)=>a+b,0) || 100;
+  let off = 0;
+
+  pcts.forEach((p, i) => {
+    const slice = (p / tot) * circ;
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
+    c.setAttribute('fill', 'none');
+    c.setAttribute('stroke', colors[i]);
+    c.setAttribute('stroke-width', sw);
+    c.setAttribute('stroke-dasharray', slice + ' ' + (circ - slice));
+    c.setAttribute('stroke-dashoffset', circ / 4 - off);
+    c.style.transform = 'rotate(-90deg)';
+    c.style.transformOrigin = cx + 'px ' + cy + 'px';
+    svg.appendChild(c);
+    off += slice;
+  });
+}
+
+// init sliders display
+['slNeeds','slSavings','slAssets','slEmerg'].forEach(id => {
+  const map = {slNeeds:'pvNeeds',slSavings:'pvSavings',slAssets:'pvAssets',slEmerg:'pvEmerg'};
+  syncSlider(id, map[id]);
+});
+drawDonut([50,20,20,10]);
+
+/* ═══════════════════════════════════════════════════════
+   PRAYER
+   ═══════════════════════════════════════════════════════ */
+
+const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(),0,0)) / 86400000);
+let vIdx = dayOfYear % VERSES.length;
+
+function showVerse(i) {
+  document.getElementById('verseText').textContent = '\u201c' + VERSES[i].text + '\u201d';
+  document.getElementById('verseRef').textContent  = '— ' + VERSES[i].ref;
+}
+function nextVerse() { vIdx = (vIdx+1) % VERSES.length; showVerse(vIdx); }
+function prevVerse() { vIdx = (vIdx-1+VERSES.length) % VERSES.length; showVerse(vIdx); }
+function randVerse() { vIdx = Math.floor(Math.random()*VERSES.length); showVerse(vIdx); }
+showVerse(vIdx);
+
+/* ═══════════════════════════════════════════════════════
+   MOTIVATION
+   ═══════════════════════════════════════════════════════ */
+
+let qIdx = dayOfYear % QUOTES.length;
+
+function buildDots() {
+  const c = document.getElementById('qDots');
+  c.innerHTML = '';
+  QUOTES.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'q-dot' + (i===qIdx?' active':'');
+    d.onclick = () => { qIdx=i; showQuote(qIdx); };
+    c.appendChild(d);
+  });
+}
+function showQuote(i) {
+  document.getElementById('quoteText').textContent   = QUOTES[i].text;
+  document.getElementById('quoteAuthor').textContent = '— ' + QUOTES[i].author;
+  buildDots();
+}
+function nextQuote() { qIdx=(qIdx+1)%QUOTES.length; showQuote(qIdx); }
+function prevQuote() { qIdx=(qIdx-1+QUOTES.length)%QUOTES.length; showQuote(qIdx); }
+showQuote(qIdx);
+setInterval(nextQuote, 15000);
+
+/* ═══════════════════════════════════════════════════════
+   TOAST
+   ═══════════════════════════════════════════════════════ */
+
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show';
+  clearTimeout(toastT);
+  toastT = setTimeout(() => {
+    t.className = 'hide';
+    setTimeout(() => t.className = '', 350);
+  }, 2500);
+}
+
+/* ═══════════════════════════════════════════════════════
+   NAV DOTS
+   ═══════════════════════════════════════════════════════ */
+
+function goTo(id) { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+
+const SEC_IDS = ['hero','schedule','streaks','rewards','finance','prayer','motivation'];
+const pips = document.querySelectorAll('.nav-pip');
+
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const i = SEC_IDS.indexOf(e.target.id);
+      pips.forEach(p => p.classList.remove('active'));
+      if (i >= 0) pips[i].classList.add('active');
+    }
+  });
+}, {threshold:0.35});
+SEC_IDS.forEach(id => { const el=document.getElementById(id); if(el) secObs.observe(el); });
+
+/* ═══════════════════════════════════════════════════════
+   SCROLL REVEAL
+   ═══════════════════════════════════════════════════════ */
+
+function initReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 50);
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.07});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+}
+
+/* ═══════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════ */
+
+buildSchedule();
+renderStreaks();
+renderRewards();
+initReveal();
+calcFinance();
+</script>
+</body>
+</html>
