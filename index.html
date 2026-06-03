@@ -1,793 +1,1390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abednego Omurwa — Daily Command Center</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Greatbridge Academy - Excellence in Education">
+  <title>Greatbridge Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+/* ============================================================
+   GREATBRIDGE ACADEMY - Main Stylesheet
+   ============================================================ */
+:root {
+  --navy: #0D1B2A;
+  --navy-mid: #162032;
+  --gold: #C9A84C;
+  --gold-light: #E8C96A;
+  --gold-pale: #F5EDD6;
+  --white: #FFFFFF;
+  --off-white: #F8F7F4;
+  --gray-100: #F4F3F0;
+  --gray-200: #E8E6E1;
+  --gray-400: #B0ADA6;
+  --gray-600: #6B6860;
+  --gray-800: #3A3835;
+  --text-dark: #1A1917;
+  --text-body: #3F3D3A;
+  --text-muted: #7A7874;
+  --red: #C0392B;
+  --green: #1A6B3C;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --shadow-sm: 0 1px 3px rgba(13,27,42,0.08);
+  --shadow-md: 0 4px 20px rgba(13,27,42,0.10);
+  --shadow-lg: 0 12px 40px rgba(13,27,42,0.14);
+  --radius: 4px;
+  --radius-lg: 8px;
+  --transition: all 0.25s ease;
+  --nav-height: 80px;
+  --container: 1200px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-body); color: var(--text-body); background: var(--white); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+h1, h2, h3, h4, h5 { font-family: var(--font-display); color: var(--navy); line-height: 1.2; font-weight: 600; }
+p { color: var(--text-body); }
+
+/* PAGES */
+.page { display: none; }
+.page.active { display: block; }
+
+/* UTILITIES */
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+.section { padding: 96px 0; }
+.section-sm { padding: 64px 0; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-header h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 12px; }
+.section-header p { color: var(--text-muted); font-size: 1.05rem; max-width: 540px; margin: 0 auto; }
+.label-tag { display: inline-block; font-family: var(--font-body); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.divider-gold { width: 40px; height: 2px; background: var(--gold); margin: 16px auto; }
+.divider-gold.left { margin: 16px 0; }
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.bg-navy { background-color: var(--navy); }
+.bg-off-white { background-color: var(--off-white); }
+.bg-gold-pale { background-color: var(--gold-pale); }
+
+/* BUTTONS */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; font-family: var(--font-body); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.03em; border: none; border-radius: var(--radius); cursor: pointer; transition: var(--transition); text-decoration: none; white-space: nowrap; }
+.btn-primary { background: var(--gold); color: var(--navy); }
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-outline { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); }
+.btn-outline:hover { background: var(--gold); color: var(--navy); }
+.btn-dark { background: var(--navy); color: var(--white); }
+.btn-dark:hover { background: var(--navy-mid); transform: translateY(-1px); }
+.btn-white { background: var(--white); color: var(--navy); }
+.btn-white:hover { background: var(--gold-pale); }
+.btn-sm { padding: 9px 18px; font-size: 0.8rem; }
+.btn-lg { padding: 16px 36px; font-size: 0.95rem; }
+
+/* NAV */
+#navbar { position: fixed; top: 0; width: 100%; z-index: 1000; height: var(--nav-height); transition: var(--transition); background: var(--navy); box-shadow: 0 2px 24px rgba(0,0,0,0.2); }
+#navbar .nav-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
+.nav-logo-icon { width: 42px; height: 42px; background: var(--gold); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--navy); flex-shrink: 0; }
+.nav-logo-text { line-height: 1.1; }
+.nav-logo-text .school-name { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--white); display: block; }
+.nav-logo-text .school-motto { font-size: 0.65rem; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links a { font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.82); padding: 8px 12px; border-radius: var(--radius); transition: var(--transition); letter-spacing: 0.02em; cursor: pointer; }
+.nav-links a:hover, .nav-links a.active { color: var(--gold); background: rgba(201,168,76,0.1); }
+.nav-links .btn-apply { background: var(--gold); color: var(--navy); padding: 8px 18px; margin-left: 8px; }
+.nav-links .btn-apply:hover { background: var(--gold-light); }
+.nav-dropdown { position: relative; }
+.nav-dropdown > a::after { content: ' +'; font-size: 0.7rem; opacity: 0.6; }
+.dropdown-menu { position: absolute; top: calc(100% + 8px); left: 0; background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); min-width: 200px; padding: 8px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: var(--transition); border: 1px solid var(--gray-200); }
+.nav-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.dropdown-menu a { display: block; padding: 9px 14px; color: var(--text-body) !important; font-size: 0.85rem; border-radius: var(--radius); }
+.dropdown-menu a:hover { background: var(--off-white); color: var(--navy) !important; }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.nav-hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+
+/* TOP BAR */
+.topbar { background: var(--navy-mid); border-bottom: 1px solid rgba(201,168,76,0.2); padding: 7px 0; font-size: 0.78rem; color: rgba(255,255,255,0.65); }
+.topbar .container { display: flex; justify-content: space-between; align-items: center; }
+.topbar-links { display: flex; gap: 20px; }
+.topbar-links a { color: rgba(255,255,255,0.65); transition: var(--transition); }
+.topbar-links a:hover { color: var(--gold); }
+.topbar-contact { display: flex; gap: 20px; }
+
+/* HERO */
+.hero { min-height: 100vh; background: var(--navy); position: relative; display: flex; align-items: center; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #0D1B2A 0%, #1a3050 60%, #0D1B2A 100%); }
+.hero-bg::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 25% 60%, rgba(201,168,76,0.06) 0%, transparent 50%), radial-gradient(circle at 75% 20%, rgba(201,168,76,0.04) 0%, transparent 50%); }
+.hero-pattern { position: absolute; right: 0; top: 0; bottom: 0; width: 45%; opacity: 0.03; background-image: repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(201,168,76,1) 30px, rgba(201,168,76,1) 32px); }
+.hero-content { position: relative; z-index: 2; max-width: var(--container); margin: 0 auto; padding: 0 24px; padding-top: 80px; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+.hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+.hero-title { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 700; color: var(--white); line-height: 1.05; max-width: 700px; margin-bottom: 24px; }
+.hero-title span { color: var(--gold); }
+.hero-subtitle { font-size: 1.15rem; color: rgba(255,255,255,0.65); max-width: 480px; margin-bottom: 40px; line-height: 1.7; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 64px; }
+.hero-stats { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+.stat-number { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* ANNOUNCEMENT BAR */
+.announcement-bar { background: var(--gold); padding: 12px 0; overflow: hidden; }
+.announcement-bar .container { display: flex; align-items: center; gap: 20px; }
+.announcement-label { flex-shrink: 0; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--navy); color: var(--gold); padding: 4px 12px; border-radius: 2px; }
+.announcement-text { font-size: 0.875rem; color: var(--navy); font-weight: 500; }
+
+/* PRINCIPAL */
+.principal-section { padding: 96px 0; background: var(--off-white); }
+.principal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.principal-image-wrap { position: relative; }
+.principal-image-wrap::before { content: ''; position: absolute; top: 24px; left: 24px; right: -24px; bottom: -24px; border: 2px solid var(--gold); border-radius: var(--radius-lg); z-index: 0; }
+.principal-placeholder { position: relative; z-index: 1; width: 100%; height: 480px; background: linear-gradient(135deg, #1a3050, #0D1B2A); border-radius: var(--radius-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); }
+.principal-placeholder .placeholder-icon { font-size: 4rem; margin-bottom: 12px; }
+.principal-quote-mark { font-family: var(--font-display); font-size: 8rem; line-height: 0.5; color: var(--gold); opacity: 0.3; margin-bottom: 16px; }
+.principal-message { font-size: 1.05rem; color: var(--text-body); line-height: 1.8; margin-bottom: 24px; font-style: italic; }
+.principal-name { font-family: var(--font-display); font-size: 1.1rem; color: var(--navy); font-weight: 600; }
+.principal-title { font-size: 0.85rem; color: var(--text-muted); }
+
+/* NEWS CARDS */
+.news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.news-card { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); transition: var(--transition); display: flex; flex-direction: column; }
+.news-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.news-card-img { height: 200px; background: linear-gradient(135deg, #162032, #0D1B2A); position: relative; overflow: hidden; flex-shrink: 0; }
+.img-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.15); font-size: 2rem; font-family: var(--font-display); letter-spacing: 0.1em; }
+.news-card-cat { position: absolute; top: 14px; left: 14px; background: var(--gold); color: var(--navy); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
+.news-card-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+.news-card-date { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px; }
+.news-card-title { font-size: 1.05rem; font-family: var(--font-display); color: var(--navy); margin-bottom: 10px; line-height: 1.35; font-weight: 600; }
+.news-card-excerpt { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; flex: 1; }
+.news-card-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--gold); margin-top: 16px; letter-spacing: 0.03em; transition: var(--transition); cursor: pointer; }
+.news-card-link::after { content: '→'; transition: transform 0.2s; }
+.news-card:hover .news-card-link::after { transform: translateX(4px); }
+
+/* EVENTS */
+.events-list { display: flex; flex-direction: column; gap: 16px; }
+.event-item { display: flex; gap: 20px; align-items: flex-start; padding: 20px; background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); transition: var(--transition); }
+.event-item:hover { border-color: var(--gold); box-shadow: var(--shadow-sm); }
+.event-date-box { flex-shrink: 0; width: 56px; height: 60px; background: var(--navy); border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--white); }
+.event-date-day { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; line-height: 1; color: var(--gold); }
+.event-date-month { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+.event-details h4 { font-size: 0.95rem; color: var(--navy); margin-bottom: 4px; font-weight: 600; }
+.event-details p { font-size: 0.82rem; color: var(--text-muted); }
+.event-cat-tag { display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); background: var(--gold-pale); padding: 2px 8px; border-radius: 2px; margin-bottom: 6px; }
+
+/* PAGE HERO */
+.page-hero { background: var(--navy); padding: 120px 0 64px; position: relative; overflow: hidden; }
+.page-hero::after { content: ''; position: absolute; right: -100px; bottom: -100px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%); }
+.page-hero .container { position: relative; z-index: 1; }
+.page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: 8px; }
+.page-hero p { color: rgba(255,255,255,0.6); font-size: 1rem; }
+.breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+.breadcrumb a { color: var(--gold); cursor: pointer; }
+.breadcrumb span { color: rgba(255,255,255,0.3); }
+
+/* CARDS */
+.card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); overflow: hidden; transition: var(--transition); }
+.card:hover { box-shadow: var(--shadow-md); }
+.card-body { padding: 24px; }
+
+/* STAFF */
+.staff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+.staff-card { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; text-align: center; border: 1px solid var(--gray-200); transition: var(--transition); }
+.staff-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.staff-photo { height: 240px; background: linear-gradient(160deg, #162032 0%, #0D1B2A 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+.staff-photo img { width: 100%; height: 100%; object-fit: cover; }
+.staff-photo-placeholder { width: 80px; height: 80px; border-radius: 50%; background: rgba(201,168,76,0.15); border: 2px solid rgba(201,168,76,0.3); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.8rem; color: var(--gold); opacity: 0.7; }
+.staff-info { padding: 18px 16px; }
+.staff-info h3 { font-size: 1rem; margin-bottom: 4px; }
+.staff-info .position { font-size: 0.82rem; color: var(--gold); font-weight: 500; margin-bottom: 4px; }
+.staff-info .dept { font-size: 0.78rem; color: var(--text-muted); }
+
+/* GALLERY */
+.gallery-grid { columns: 3; gap: 16px; }
+.gallery-item { break-inside: avoid; margin-bottom: 16px; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; position: relative; }
+.gallery-item img { width: 100%; display: block; transition: transform 0.4s ease; }
+.gallery-item:hover img { transform: scale(1.04); }
+.gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,27,42,0.7) 0%, transparent 60%); opacity: 0; transition: var(--transition); display: flex; align-items: flex-end; padding: 16px; }
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-overlay span { color: var(--white); font-size: 0.875rem; font-weight: 500; }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+.contact-info-item { display: flex; gap: 16px; margin-bottom: 28px; }
+.contact-icon { width: 44px; height: 44px; background: var(--gold-pale); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold); font-size: 1.1rem; }
+.contact-info-item h4 { font-size: 0.875rem; color: var(--navy); margin-bottom: 4px; }
+.contact-info-item p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+
+/* FORMS */
+.form-group { margin-bottom: 20px; }
+.form-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--gray-800); margin-bottom: 6px; letter-spacing: 0.02em; }
+.form-control { width: 100%; padding: 11px 14px; font-family: var(--font-body); font-size: 0.9rem; color: var(--text-dark); background: var(--white); border: 1.5px solid var(--gray-200); border-radius: var(--radius); transition: var(--transition); appearance: none; }
+.form-control:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
+.form-control::placeholder { color: var(--gray-400); }
+textarea.form-control { resize: vertical; min-height: 120px; }
+select.form-control { cursor: pointer; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* FOOTER */
+.footer { background: var(--navy); color: rgba(255,255,255,0.65); }
+.footer-main { padding: 72px 0 48px; }
+.footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px; }
+.footer-brand p { font-size: 0.875rem; line-height: 1.7; max-width: 280px; }
+.footer-col h4 { font-family: var(--font-display); font-size: 0.95rem; color: var(--white); margin-bottom: 20px; font-weight: 600; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a { font-size: 0.875rem; color: rgba(255,255,255,0.55); transition: var(--transition); cursor: pointer; }
+.footer-col ul li a:hover { color: var(--gold); }
+.footer-col .contact-line { display: flex; gap: 10px; font-size: 0.875rem; margin-bottom: 10px; color: rgba(255,255,255,0.55); }
+.footer-col .contact-line strong { color: rgba(255,255,255,0.85); min-width: 20px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; }
+.footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+.footer-bottom a { color: rgba(255,255,255,0.5); font-size: 0.8rem; transition: var(--transition); cursor: pointer; }
+.footer-bottom a:hover { color: var(--gold); }
+
+/* VALUES/FEATURES */
+.values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.value-card { padding: 32px 24px; background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); text-align: center; transition: var(--transition); }
+.value-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.value-icon { width: 56px; height: 56px; background: var(--gold-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1.4rem; color: var(--gold); }
+.value-card h3 { font-size: 1rem; margin-bottom: 8px; }
+.value-card p { font-size: 0.875rem; color: var(--text-muted); }
+
+/* ACADEMICS */
+.dept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+.dept-card { padding: 28px; border-radius: var(--radius-lg); background: var(--white); border: 1px solid var(--gray-200); border-left: 3px solid var(--gold); transition: var(--transition); }
+.dept-card:hover { box-shadow: var(--shadow-md); }
+.dept-card h3 { font-size: 1.05rem; margin-bottom: 10px; }
+.dept-card ul { padding-left: 0; }
+.dept-card ul li { font-size: 0.875rem; color: var(--text-muted); padding: 4px 0; border-bottom: 1px solid var(--gray-100); }
+.dept-card ul li:last-child { border: none; }
+
+/* LIGHTBOX */
+.lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: var(--transition); }
+.lightbox.active { opacity: 1; visibility: visible; }
+.lightbox img { max-width: 90vw; max-height: 85vh; border-radius: var(--radius); }
+.lightbox-close { position: absolute; top: 20px; right: 24px; color: white; font-size: 2rem; cursor: pointer; opacity: 0.7; transition: var(--transition); background: none; border: none; }
+.lightbox-close:hover { opacity: 1; }
+
+/* DOWNLOADS */
+.download-item { display: flex; align-items: center; gap: 16px; padding: 18px 20px; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-bottom: 12px; transition: var(--transition); }
+.download-item:hover { border-color: var(--gold); }
+.download-icon { width: 44px; height: 44px; background: var(--gold-pale); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 1.1rem; flex-shrink: 0; }
+.download-meta { flex: 1; }
+.download-meta h4 { font-size: 0.95rem; color: var(--navy); margin-bottom: 3px; }
+.download-meta p { font-size: 0.8rem; color: var(--text-muted); }
+
+/* STUDENT LIFE */
+.activities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.activity-card { padding: 28px; background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); text-align: center; transition: var(--transition); }
+.activity-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.activity-card h3 { margin: 12px 0 8px; font-size: 1rem; }
+.activity-card p { font-size: 0.875rem; color: var(--text-muted); }
+
+/* STEPS */
+.steps-list { counter-reset: step; display: flex; flex-direction: column; gap: 20px; }
+.step-item { display: flex; gap: 20px; align-items: flex-start; padding: 20px; background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--gray-200); }
+.step-num { width: 40px; height: 40px; border-radius: 50%; background: var(--navy); color: var(--gold); font-family: var(--font-display); font-size: 1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-content h4 { font-size: 0.95rem; margin-bottom: 4px; }
+.step-content p { font-size: 0.875rem; color: var(--text-muted); }
+
+/* FEE TABLE */
+.fee-table { width: 100%; border-collapse: collapse; }
+.fee-table th { background: var(--navy); color: var(--white); padding: 12px 16px; text-align: left; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.fee-table td { padding: 12px 16px; border-bottom: 1px solid var(--gray-200); font-size: 0.9rem; }
+.fee-table tr:last-child td { border: none; }
+.fee-table tr:hover td { background: var(--off-white); }
+.fee-table .total td { font-weight: 600; color: var(--navy); border-top: 2px solid var(--gray-200); }
+
+/* MAP */
+.map-container { height: 380px; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--gray-200); }
+.map-container iframe { width: 100%; height: 100%; border: none; }
+
+/* ANIMATIONS */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.revealed { opacity: 1; transform: translateY(0); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--gray-400); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--navy); }
+
+/* Page wrapper padding for fixed nav */
+.page-content { padding-top: var(--nav-height); }
+.page-content.has-topbar { padding-top: calc(var(--nav-height) + 36px); }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .principal-grid { gap: 48px; }
+}
+@media (max-width: 768px) {
+  :root { --nav-height: 68px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-links.open { display: flex; flex-direction: column; position: fixed; top: var(--nav-height); left: 0; right: 0; background: var(--navy); padding: 20px; gap: 4px; box-shadow: var(--shadow-lg); z-index: 999; }
+  .nav-links.open a { padding: 12px 16px; }
+  .dropdown-menu { position: static; box-shadow: none; background: rgba(255,255,255,0.05); visibility: visible; opacity: 1; transform: none; margin-top: 4px; }
+  .dropdown-menu a { color: rgba(255,255,255,0.7) !important; }
+  .hero-title { font-size: 2.4rem; }
+  .hero-stats { gap: 28px; }
+  .principal-grid { grid-template-columns: 1fr; }
+  .news-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { columns: 2; }
+  .activities-grid { grid-template-columns: 1fr; }
+  .topbar { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+  .section { padding: 64px 0; }
+}
+@media (max-width: 480px) {
+  .hero-title { font-size: 2rem; }
+  .values-grid { grid-template-columns: 1fr; }
+  .gallery-grid { columns: 1; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+}
+  </style>
 </head>
 <body>
 
-<div id="toast"></div>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-links">
+      <a href="mailto:info@greatbridge.ac.ke">info@greatbridge.ac.ke</a>
+      <a href="tel:+254712345678">+254 712 345 678</a>
+    </div>
+    <div class="topbar-contact">
+      <span>Monday - Friday: 7:00 AM - 5:00 PM</span>
+      <a href="#">Staff Portal</a>
+    </div>
+  </div>
+</div>
 
-<!-- Side navigation -->
-<nav class="sidenav">
-  <div class="nav-pip active" data-label="Home"       onclick="goTo('hero')"></div>
-  <div class="nav-pip"        data-label="Schedule"   onclick="goTo('schedule')"></div>
-  <div class="nav-pip"        data-label="Streaks"    onclick="goTo('streaks')"></div>
-  <div class="nav-pip"        data-label="Rewards"    onclick="goTo('rewards')"></div>
-  <div class="nav-pip"        data-label="Finance"    onclick="goTo('finance')"></div>
-  <div class="nav-pip"        data-label="Prayer"     onclick="goTo('prayer')"></div>
-  <div class="nav-pip"        data-label="Motivation" onclick="goTo('motivation')"></div>
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" onclick="navigate('home')">
+      <div class="nav-logo-icon">GA</div>
+      <div class="nav-logo-text">
+        <span class="school-name">Greatbridge Academy</span>
+        <span class="school-motto">Educating for Tomorrow</span>
+      </div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a onclick="navigate('home')">Home</a>
+      <a onclick="navigate('about')">About</a>
+      <div class="nav-dropdown">
+        <a onclick="navigate('academics')">Academics</a>
+        <div class="dropdown-menu">
+          <a onclick="navigate('academics')">Curriculum</a>
+          <a onclick="navigate('academics')">Departments</a>
+          <a onclick="navigate('academics')">Performance</a>
+        </div>
+      </div>
+      <a onclick="navigate('staff')">Staff</a>
+      <a onclick="navigate('student-life')">Student Life</a>
+      <a onclick="navigate('news')">News</a>
+      <a onclick="navigate('gallery')">Gallery</a>
+      <a onclick="navigate('downloads')">Downloads</a>
+      <a onclick="navigate('contact')">Contact</a>
+      <a onclick="navigate('admissions')" class="btn-apply">Apply Now</a>
+    </div>
+    <div class="nav-hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
 </nav>
 
-<!-- ══ HERO ══════════════════════════════════════════════════ -->
-<header id="hero">
-  <div class="grid-bg"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-label">Personal Command Center</div>
-  <h1 class="hero-name">
-    <span class="line1">Abednego</span>
-    <span class="line2">Omurwa</span>
-  </h1>
-  <p class="hero-tagline">Discipline &nbsp;&middot;&nbsp; Growth &nbsp;&middot;&nbsp; Faith &nbsp;&middot;&nbsp; Excellence</p>
-  <div class="hero-clock" id="clock">
-    <span id="hh">00</span><span class="colon">:</span><span id="mm">00</span><span class="colon">:</span><span id="ss">00</span>
-  </div>
-  <div class="hero-date" id="dateDisp"></div>
-  <div class="scroll-cue">SCROLL</div>
-</header>
+<!-- ==================== HOME PAGE ==================== -->
+<div id="page-home" class="page active">
+  <div style="padding-top:36px;"><!-- topbar offset -->
 
-<!-- ══ SCHEDULE ══════════════════════════════════════════════ -->
-<section id="schedule">
-  <div class="sec-label">01 &mdash; Daily Schedule</div>
-
-  <div class="day-ring-row reveal">
-    <div class="ring-wrap">
-      <svg width="80" height="80" viewBox="0 0 80 80">
-        <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
-        <circle id="ringCircle" cx="40" cy="40" r="32" fill="none"
-          stroke="#b8922a" stroke-width="5" stroke-linecap="round"
-          stroke-dasharray="201" stroke-dashoffset="201"
-          style="transition:stroke-dashoffset 1s ease"/>
-      </svg>
-      <div class="ring-label" id="ringPct">0%</div>
-    </div>
-    <div class="ring-info">
-      <h4 id="ringLabel">Day Progress</h4>
-      <p id="ringDetail">Tracking your completed activities</p>
-    </div>
-  </div>
-
-  <div class="active-banner reveal">
-    <div class="live-pill"><div class="live-dot"></div>Currently Active</div>
-    <h3 id="curName">Loading...</h3>
-    <div class="active-time" id="curTime">&nbsp;</div>
-    <div class="progress-track">
-      <div class="progress-fill" id="curFill" style="width:0%"></div>
-    </div>
-  </div>
-
-  <div class="schedule-list" id="schedList"></div>
-</section>
-
-<!-- ══ STREAKS ════════════════════════════════════════════════ -->
-<section id="streaks">
-  <div class="sec-label">02 &mdash; Activity Streaks</div>
-  <div class="streaks-grid" id="streakGrid"></div>
-</section>
-
-<!-- ══ REWARDS ════════════════════════════════════════════════ -->
-<section id="rewards">
-  <div class="sec-label">03 &mdash; Consistency Rewards</div>
-  <div class="rewards-grid" id="rewardGrid"></div>
-</section>
-
-<!-- ══ FINANCE ════════════════════════════════════════════════ -->
-<section id="finance">
-  <div class="sec-label">04 &mdash; Financial Strategy &amp; Calculator</div>
-  <div class="finance-grid">
-
-    <!-- Calculator -->
-    <div class="finance-card reveal">
-      <h3>Income Allocator</h3>
-
-      <label class="f-label">Monthly Income (KES)</label>
-      <input class="f-input" id="incomeVal" type="number" placeholder="e.g. 50000" oninput="calcFinance()"/>
-
-      <div class="slider-group">
-        <label class="f-label">Expenses / Needs</label>
-        <div class="slider-row">
-          <input class="f-slider" id="slNeeds" type="range" min="10" max="70" value="50"
-            oninput="syncSlider('slNeeds','pvNeeds'); calcFinance()"/>
-          <span class="slider-pct" id="pvNeeds">50%</span>
-        </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-content container">
+      <div class="hero-eyebrow">Greatbridge Academy — Eldoret, Kenya</div>
+      <h1 class="hero-title">Shaping Minds,<br><span>Building Futures</span></h1>
+      <p class="hero-subtitle">A community of learners committed to academic excellence, integrity, and service. We prepare students not just for examinations, but for life.</p>
+      <div class="hero-actions">
+        <a onclick="navigate('admissions')" class="btn btn-primary btn-lg">Apply for Admission</a>
+        <a onclick="navigate('about')" class="btn btn-outline btn-lg">Our Story</a>
       </div>
-
-      <div class="slider-group">
-        <label class="f-label">Savings</label>
-        <div class="slider-row">
-          <input class="f-slider" id="slSavings" type="range" min="5" max="40" value="20"
-            oninput="syncSlider('slSavings','pvSavings'); calcFinance()"/>
-          <span class="slider-pct" id="pvSavings">20%</span>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number counter" data-target="1200" data-suffix="+">0</div>
+          <div class="stat-label">Students Enrolled</div>
         </div>
-      </div>
-
-      <div class="slider-group">
-        <label class="f-label">Assets / Investments</label>
-        <div class="slider-row">
-          <input class="f-slider" id="slAssets" type="range" min="5" max="40" value="20"
-            oninput="syncSlider('slAssets','pvAssets'); calcFinance()"/>
-          <span class="slider-pct" id="pvAssets">20%</span>
+        <div class="stat-item">
+          <div class="stat-number counter" data-target="85" data-suffix="+">0</div>
+          <div class="stat-label">Qualified Staff</div>
         </div>
-      </div>
-
-      <div class="slider-group">
-        <label class="f-label">Emergency Fund</label>
-        <div class="slider-row">
-          <input class="f-slider" id="slEmerg" type="range" min="0" max="20" value="10"
-            oninput="syncSlider('slEmerg','pvEmerg'); calcFinance()"/>
-          <span class="slider-pct" id="pvEmerg">10%</span>
+        <div class="stat-item">
+          <div class="stat-number counter" data-target="30" data-suffix="+">0</div>
+          <div class="stat-label">Years of Excellence</div>
         </div>
-      </div>
-
-      <p class="warn-text" id="pctWarn">Total exceeds 100% — please adjust sliders</p>
-      <button class="calc-btn" onclick="calcFinance()">Calculate</button>
-    </div>
-
-    <!-- Results -->
-    <div class="finance-card reveal">
-      <h3>Your Allocation</h3>
-      <div class="alloc-grid">
-        <div class="alloc-box">
-          <span class="alloc-amount" id="rNeeds">KES 0</span>
-          <span class="alloc-name">Expenses</span>
-          <span class="alloc-pct" id="ppNeeds">50%</span>
-        </div>
-        <div class="alloc-box">
-          <span class="alloc-amount" id="rSavings">KES 0</span>
-          <span class="alloc-name">Savings</span>
-          <span class="alloc-pct" id="ppSavings">20%</span>
-        </div>
-        <div class="alloc-box">
-          <span class="alloc-amount" id="rAssets">KES 0</span>
-          <span class="alloc-name">Assets</span>
-          <span class="alloc-pct" id="ppAssets">20%</span>
-        </div>
-        <div class="alloc-box">
-          <span class="alloc-amount" id="rEmerg">KES 0</span>
-          <span class="alloc-name">Emergency</span>
-          <span class="alloc-pct" id="ppEmerg">10%</span>
-        </div>
-      </div>
-      <div class="donut-row">
-        <svg id="donutSvg" width="100" height="100" viewBox="0 0 100 100"></svg>
-        <div class="legend">
-          <div class="leg-item"><div class="leg-dot" style="background:#b8922a"></div><span class="leg-name">Expenses</span><span class="leg-val" id="lNeeds">50%</span></div>
-          <div class="leg-item"><div class="leg-dot" style="background:#d4a93c"></div><span class="leg-name">Savings</span><span class="leg-val" id="lSavings">20%</span></div>
-          <div class="leg-item"><div class="leg-dot" style="background:#6b5520"></div><span class="leg-name">Assets</span><span class="leg-val" id="lAssets">20%</span></div>
-          <div class="leg-item"><div class="leg-dot" style="background:#4a7c5c"></div><span class="leg-name">Emergency</span><span class="leg-val" id="lEmerg">10%</span></div>
+        <div class="stat-item">
+          <div class="stat-number counter" data-target="95" data-suffix="%">0</div>
+          <div class="stat-label">KCSE Pass Rate</div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Money rules -->
-    <div class="finance-card reveal">
-      <h3>Money Rules for Abednego</h3>
-      <div class="rule-item">
-        <h4>Pay Yourself First</h4>
-        <p>The moment income arrives, move savings to a separate account before spending anything. What you don't see, you don't spend.</p>
-      </div>
-      <div class="rule-item">
-        <h4>The 72-Hour Rule</h4>
-        <p>Any non-essential purchase above KES 2,000 — wait 72 hours. Most impulse desires disappear on their own.</p>
-      </div>
-      <div class="rule-item">
-        <h4>Build Emergency Fund First</h4>
-        <p>Target 3–6 months of expenses (KES 50k–150k) in M-Shwari or a money market fund before putting money into assets.</p>
-      </div>
-      <div class="rule-item">
-        <h4>Invest in Assets That Pay You</h4>
-        <p>Skills, digital products, websites, and courses — every shilling you put into an income-generating asset works while you sleep.</p>
-      </div>
-    </div>
-
-    <!-- Savings goals -->
-    <div class="finance-card reveal">
-      <h3>Savings Goals</h3>
-      <div class="goal-row">
-        <div class="goal-top">
-          <span>Emergency Fund</span>
-          <span>KES <span id="g1v">0</span> / 100,000</span>
-        </div>
-        <div class="goal-track"><div class="goal-fill" id="g1f" style="width:0%"></div></div>
-      </div>
-      <div class="goal-row">
-        <div class="goal-top">
-          <span>Tech &amp; Tools</span>
-          <span>KES <span id="g2v">0</span> / 50,000</span>
-        </div>
-        <div class="goal-track"><div class="goal-fill" id="g2f" style="width:0%"></div></div>
-      </div>
-      <div class="goal-row">
-        <div class="goal-top">
-          <span>Business Capital</span>
-          <span>KES <span id="g3v">0</span> / 200,000</span>
-        </div>
-        <div class="goal-track"><div class="goal-fill" id="g3f" style="width:0%"></div></div>
-      </div>
-      <p style="font-size:11px;color:var(--muted);line-height:1.8;margin-top:1rem">
-        Tip: Use M-Shwari for emergency savings (earns interest). Use CIC or Zimele Money Market for mid-term. NSE or a Sacco for long-term assets.
-      </p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══ PRAYER ══════════════════════════════════════════════════ -->
-<section id="prayer">
-  <div class="sec-label">05 &mdash; Daily Prayer &amp; Scripture</div>
-  <div class="prayer-box reveal">
-    <p class="verse-text" id="verseText"></p>
-    <p class="verse-ref"  id="verseRef"></p>
-    <div class="verse-nav">
-      <button class="verse-btn" onclick="prevVerse()">Previous</button>
-      <button class="verse-btn" onclick="nextVerse()">Next</button>
-      <button class="verse-btn" onclick="randVerse()">Random</button>
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar">
+    <div class="container">
+      <span class="announcement-label">Latest</span>
+      <span class="announcement-text">2024 KCSE Registration Now Open — Contact the School Office for Details</span>
+      <a onclick="navigate('news')" style="margin-left:auto;flex-shrink:0;font-size:0.8rem;color:var(--navy);font-weight:600;">Read More</a>
     </div>
   </div>
-</section>
 
-<!-- ══ MOTIVATION ═════════════════════════════════════════════ -->
-<section id="motivation">
-  <div class="sec-label">06 &mdash; Daily Motivation</div>
-  <div class="quote-box reveal">
-    <span class="quote-mark">&ldquo;</span>
-    <p class="quote-text"   id="quoteText"></p>
-    <p class="quote-author" id="quoteAuthor"></p>
-    <div class="quote-nav">
-      <button class="q-btn" onclick="prevQuote()">&#8592;</button>
-      <button class="q-btn" onclick="nextQuote()">&#8594;</button>
-      <div class="q-dots" id="qDots"></div>
+  <!-- PRINCIPAL'S MESSAGE -->
+  <section class="principal-section">
+  
+  <<img src="images\principal.jfif"
+     alt="Principal"
+     style="width:400px; height:500px; object-fit:cover; border-radius:20px;">
+        </div>
+        <div class="principal-text">
+          <span class="label-tag">Message from the Principal</span>
+          <h2>A Word of Welcome</h2>
+          <div class="divider-gold left"></div>
+          <div class="principal-quote-mark">"</div>
+          <p class="principal-message">At Greatbridge Academy, we believe that every student carries within them the seed of greatness. Our role as educators is not merely to transmit knowledge, but to cultivate the curiosity, character, and confidence that enables each student to realize their full potential.</p>
+          <p class="principal-message">We are proud of the tradition of excellence we have built over three decades, and we remain committed to providing an environment where learning thrives, talent is nurtured, and character is formed.</p>
+          <div class="principal-name">Dr. James Mwangi</div>
+          <div class="principal-title">Principal, Greatbridge Academy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE VALUES -->
+  <section class="section bg-off-white">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">What We Stand For</span>
+        <h2>Our Core Values</h2>
+        <div class="divider-gold"></div>
+      </div>
+      <div class="values-grid">
+        <div class="value-card reveal"><div class="value-icon">A</div><h3>Academic Excellence</h3><p>We maintain the highest standards of academic achievement and intellectual curiosity.</p></div>
+        <div class="value-card reveal"><div class="value-icon">I</div><h3>Integrity</h3><p>Honesty and moral courage guide every decision and action in our community.</p></div>
+        <div class="value-card reveal"><div class="value-icon">S</div><h3>Service</h3><p>We cultivate a spirit of giving back and contributing meaningfully to society.</p></div>
+        <div class="value-card reveal"><div class="value-icon">D</div><h3>Discipline</h3><p>Self-discipline, responsibility, and respect are the foundations of our school culture.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST NEWS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Stay Informed</span>
+        <h2>Latest News</h2>
+        <div class="divider-gold"></div>
+        <p>Updates, announcements, and stories from across our school community.</p>
+      </div>
+      <div class="news-grid">
+        <article class="news-card reveal">
+          <div class="news-card-img"><div class="img-placeholder">NEWS</div><span class="news-card-cat">Announcement</span></div>
+          <div class="news-card-body">
+            <div class="news-card-date">15 November 2024</div>
+            <h3 class="news-card-title">2024 KCSE Registration Now Open for Form 4 Students</h3>
+            <p class="news-card-excerpt">All Form 4 students are reminded to complete their KCSE registration by 30th November 2024...</p>
+            <a class="news-card-link" onclick="navigate('news')">Read Article</a>
+          </div>
+        </article>
+        <article class="news-card reveal">
+          <div class="news-card-img"><div class="img-placeholder">NEWS</div><span class="news-card-cat">Achievement</span></div>
+          <div class="news-card-body">
+            <div class="news-card-date">2 November 2024</div>
+            <h3 class="news-card-title">Greatbridge Boys Win County Football Championship</h3>
+            <p class="news-card-excerpt">Our boys football team has won the Uasin Gishu County championship for the third consecutive year...</p>
+            <a class="news-card-link" onclick="navigate('news')">Read Article</a>
+          </div>
+        </article>
+        <article class="news-card reveal">
+          <div class="news-card-img"><div class="img-placeholder">NEWS</div><span class="news-card-cat">Event</span></div>
+          <div class="news-card-body">
+            <div class="news-card-date">20 October 2024</div>
+            <h3 class="news-card-title">Annual Science Fair Set for December — Registrations Open</h3>
+            <p class="news-card-excerpt">The annual Greatbridge Science Fair will be held on 5th December 2024. Students across all forms are encouraged to participate...</p>
+            <a class="news-card-link" onclick="navigate('news')">Read Article</a>
+          </div>
+        </article>
+      </div>
+      <div style="text-align:center;margin-top:40px;">
+        <a onclick="navigate('news')" class="btn btn-dark">View All News</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPCOMING EVENTS -->
+  <section class="section-sm bg-navy" style="padding:80px 0;">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag" style="color:var(--gold);">Mark Your Calendar</span>
+        <h2 style="color:white;">Upcoming Events</h2>
+        <div class="divider-gold"></div>
+      </div>
+      <div style="max-width:680px;margin:0 auto;">
+        <div class="events-list">
+          <div class="event-item" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);">
+            <div class="event-date-box"><div class="event-date-day">5</div><div class="event-date-month">Dec</div></div>
+            <div class="event-details"><span class="event-cat-tag">Academic</span><h4 style="color:white;">Annual Science Fair 2024</h4><p style="color:rgba(255,255,255,0.5);">School Grounds &mdash; 9:00 AM</p></div>
+          </div>
+          <div class="event-item" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);">
+            <div class="event-date-box"><div class="event-date-day">10</div><div class="event-date-month">Dec</div></div>
+            <div class="event-details"><span class="event-cat-tag">Ceremony</span><h4 style="color:white;">End of Year Prize Giving Day</h4><p style="color:rgba(255,255,255,0.5);">School Hall &mdash; 10:00 AM</p></div>
+          </div>
+          <div class="event-item" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);">
+            <div class="event-date-box"><div class="event-date-day">15</div><div class="event-date-month">Jan</div></div>
+            <div class="event-details"><span class="event-cat-tag">Admissions</span><h4 style="color:white;">Term 1 2025 — Reporting Date</h4><p style="color:rgba(255,255,255,0.5);">School Campus &mdash; 7:00 AM</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK LINKS -->
+  <section class="section-sm bg-gold-pale">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Navigate Quickly</span>
+        <h2>Quick Links</h2>
+      </div>
+      <div class="values-grid">
+        <a onclick="navigate('admissions')" class="value-card" style="text-decoration:none;cursor:pointer;"><div class="value-icon">A</div><h3>Admissions</h3><p>Start your application and join the Greatbridge family.</p></a>
+        <a onclick="navigate('academics')" class="value-card" style="text-decoration:none;cursor:pointer;"><div class="value-icon">S</div><h3>Academics</h3><p>Explore our curriculum, departments, and subjects offered.</p></a>
+        <a onclick="navigate('downloads')" class="value-card" style="text-decoration:none;cursor:pointer;"><div class="value-icon">D</div><h3>Downloads</h3><p>Access admission forms, fee structures, and school documents.</p></a>
+        <a onclick="navigate('contact')" class="value-card" style="text-decoration:none;cursor:pointer;"><div class="value-icon">C</div><h3>Contact Us</h3><p>Get in touch with us. We are always happy to help.</p></a>
+      </div>
+    </div>
+  </section>
+
+  </div><!-- end topbar offset -->
+</div>
+
+<!-- ==================== ABOUT PAGE ==================== -->
+<div id="page-about" class="page">
+  <div style="padding-top:36px;">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span>/</span>About Us</div>
+      <h1>About Greatbridge Academy</h1>
+      <p>Three decades of nurturing excellence in education</p>
     </div>
   </div>
-</section>
 
-<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
-<footer>
-  <div class="foot-name">Abednego Omurwa</div>
-  <div class="foot-sub">Every day is a step closer to the vision</div>
+  <section class="section">
+    <div class="container">
+      <div class="principal-grid">
+        <div>
+          <span class="label-tag">Our Heritage</span>
+          <h2>Our History</h2>
+          <div class="divider-gold left"></div>
+          <p style="margin-bottom:16px;">Greatbridge Academy was founded in 1993 by a group of educators who believed that quality education should be accessible to all children regardless of their background. What began as a small community school with a handful of students has grown into one of the most respected secondary schools in the Rift Valley region.</p>
+          <p style="margin-bottom:16px;">Through decades of dedicated service, consistent investment in infrastructure and human capital, and an unwavering commitment to academic standards, Greatbridge Academy has produced alumni who serve in all sectors of Kenya's national life — in medicine, law, business, public service, and the arts.</p>
+          <p>Today, with over 1,200 students and more than 85 teaching and support staff, we continue to build on this proud legacy while embracing the innovations required to prepare students for an ever-changing world.</p>
+        </div>
+        <div class="principal-image-wrap">
+          <div class="principal-placeholder"><div class="placeholder-icon">S</div><span>School Building Photo</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-off-white">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Our Foundation</span>
+        <h2>Vision, Mission and Values</h2>
+        <div class="divider-gold"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:48px;">
+        <div style="padding:36px;background:var(--navy);border-radius:var(--radius-lg);color:white;">
+          <span class="label-tag" style="color:var(--gold);">Vision</span>
+          <h3 style="color:white;font-size:1.4rem;margin:12px 0;">To be the leading centre of holistic education in Kenya</h3>
+          <p style="color:rgba(255,255,255,0.65);">We aspire to a future where every student who passes through our doors leaves equipped with the knowledge, character, and competence to excel in life and serve their nation.</p>
+        </div>
+        <div style="padding:36px;background:var(--gold);border-radius:var(--radius-lg);">
+          <span class="label-tag" style="color:var(--navy);">Mission</span>
+          <h3 style="color:var(--navy);font-size:1.4rem;margin:12px 0;">To provide quality, values-based education</h3>
+          <p style="color:rgba(13,27,42,0.75);">We are committed to providing an inclusive, stimulating, and supportive learning environment that develops academic excellence, character, creativity, and a lifelong love of learning.</p>
+        </div>
+      </div>
+      <div class="values-grid">
+        <div class="value-card"><div class="value-icon">A</div><h3>Academic Excellence</h3><p>We pursue the highest standards of academic achievement in all subjects and co-curricular activities.</p></div>
+        <div class="value-card"><div class="value-icon">I</div><h3>Integrity</h3><p>We do what is right, even when no one is watching. Honesty underpins all that we do.</p></div>
+        <div class="value-card"><div class="value-icon">R</div><h3>Respect</h3><p>We value every individual and treat all members of our community with dignity and care.</p></div>
+        <div class="value-card"><div class="value-icon">S</div><h3>Service</h3><p>We believe in giving back to our community and using our gifts to benefit others.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Our Journey</span>
+        <h2>Key Milestones</h2>
+        <div class="divider-gold"></div>
+      </div>
+      <div class="steps-list" style="max-width:700px;margin:0 auto;">
+        <div class="step-item"><div class="step-num" style="font-size:0.8rem;font-family:var(--font-body);font-weight:700;width:56px;border-radius:4px;">1993</div><div class="step-content"><h4>Founding</h4><p>Greatbridge Academy opens its doors with 63 students and 12 teachers in temporary classrooms.</p></div></div>
+        <div class="step-item"><div class="step-num" style="font-size:0.8rem;font-family:var(--font-body);font-weight:700;width:56px;border-radius:4px;">2000</div><div class="step-content"><h4>First KCSE Class</h4><p>Our inaugural Form 4 class achieves a 92% pass rate in the KCSE examinations.</p></div></div>
+        <div class="step-item"><div class="step-num" style="font-size:0.8rem;font-family:var(--font-body);font-weight:700;width:56px;border-radius:4px;">2008</div><div class="step-content"><h4>Infrastructure Expansion</h4><p>New science laboratories, library, and computer centre are commissioned.</p></div></div>
+        <div class="step-item"><div class="step-num" style="font-size:0.8rem;font-family:var(--font-body);font-weight:700;width:56px;border-radius:4px;">2015</div><div class="step-content"><h4>National Recognition</h4><p>Greatbridge Academy is awarded the National Schools Award for Academic Excellence by the Ministry of Education.</p></div></div>
+        <div class="step-item"><div class="step-num" style="font-size:0.8rem;font-family:var(--font-body);font-weight:700;width:56px;border-radius:4px;">2024</div><div class="step-content"><h4>30 Years of Excellence</h4><p>We celebrate three decades of transforming lives through education, with over 15,000 alumni.</p></div></div>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+
+<!-- ==================== ACADEMICS PAGE ==================== -->
+<div id="page-academics" class="page">
+  <div style="padding-top:36px;">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span>/</span>Academics</div>
+      <h1>Academics</h1>
+      <p>A rigorous, broad-based curriculum designed to unlock every student's potential</p>
+    </div>
+  </div>
+
+  <section class="section" id="curriculum">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Our Approach</span>
+        <h2>Curriculum</h2>
+        <div class="divider-gold"></div>
+        <p>We follow the Kenya National Curriculum aligned with the Kenya Institute of Curriculum Development (KICD) framework, offering both the CBC and KCSE pathways.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+        <div style="padding:32px;background:var(--off-white);border-radius:var(--radius-lg);border-left:3px solid var(--gold);">
+          <h3 style="margin-bottom:12px;">Junior School (CBC)</h3>
+          <p style="margin-bottom:12px;">Our junior school implements the Competency Based Curriculum (CBC) with emphasis on inquiry-based learning, creativity, and practical skills development.</p>
+          <ul style="padding-left:16px;color:var(--text-muted);">
+            <li style="margin-bottom:6px;font-size:0.9rem;">Grade 7, 8, and 9</li>
+            <li style="margin-bottom:6px;font-size:0.9rem;">Seven learning areas</li>
+            <li style="margin-bottom:6px;font-size:0.9rem;">Project-based and portfolio assessment</li>
+            <li style="font-size:0.9rem;">Co-curricular integration</li>
+          </ul>
+        </div>
+        <div style="padding:32px;background:var(--navy);border-radius:var(--radius-lg);color:white;">
+          <h3 style="color:white;margin-bottom:12px;">Senior School (KCSE)</h3>
+          <p style="margin-bottom:12px;color:rgba(255,255,255,0.7);">Form 1 to Form 4 students follow the KCSE curriculum with a comprehensive range of subjects across core and elective clusters.</p>
+          <ul style="padding-left:16px;color:rgba(255,255,255,0.6);">
+            <li style="margin-bottom:6px;font-size:0.9rem;">Forms 1 through 4</li>
+            <li style="margin-bottom:6px;font-size:0.9rem;">Languages, Sciences, Humanities, Technical</li>
+            <li style="margin-bottom:6px;font-size:0.9rem;">KCSE examinations through KNEC</li>
+            <li style="font-size:0.9rem;">University guidance and placement support</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-off-white" id="departments">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Academic Departments</span>
+        <h2>Our Departments</h2>
+        <div class="divider-gold"></div>
+      </div>
+      <div class="dept-grid">
+        <div class="dept-card"><h3>Languages</h3><ul><li>English Language and Literature</li><li>Kiswahili</li><li>French (Elective)</li><li>German (Elective)</li></ul></div>
+        <div class="dept-card"><h3>Sciences</h3><ul><li>Biology</li><li>Chemistry</li><li>Physics</li><li>Agriculture</li></ul></div>
+        <div class="dept-card"><h3>Mathematics</h3><ul><li>Mathematics (Core)</li><li>Additional Mathematics</li><li>Business Mathematics</li></ul></div>
+        <div class="dept-card"><h3>Humanities</h3><ul><li>History and Government</li><li>Geography</li><li>Christian Religious Education</li><li>Islamic Religious Education</li></ul></div>
+        <div class="dept-card"><h3>Business Studies</h3><ul><li>Business Studies</li><li>Economics</li><li>Accounting</li><li>Commerce</li></ul></div>
+        <div class="dept-card"><h3>Technical and Applied</h3><ul><li>Computer Studies</li><li>Home Science</li><li>Art and Design</li><li>Music</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="performance">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Track Record</span>
+        <h2>Academic Performance</h2>
+        <div class="divider-gold"></div>
+      </div>
+      <div class="values-grid" style="margin-bottom:40px;">
+        <div class="value-card"><div class="value-icon" style="font-size:1.5rem;font-family:var(--font-display);font-weight:700;">95%</div><h3>KCSE Pass Rate</h3><p>Consistently above the national average over the past 5 years.</p></div>
+        <div class="value-card"><div class="value-icon" style="font-size:1.5rem;font-family:var(--font-display);font-weight:700;">B+</div><h3>Mean Grade 2023</h3><p>Our Form 4 class of 2023 achieved a school mean grade of B+.</p></div>
+        <div class="value-card"><div class="value-icon" style="font-size:1.5rem;font-family:var(--font-display);font-weight:700;">78%</div><h3>University Placement</h3><p>Of our KCSE candidates qualify for university placement each year.</p></div>
+        <div class="value-card"><div class="value-icon" style="font-size:1.5rem;font-family:var(--font-display);font-weight:700;">A</div><h3>Top Grade Count</h3><p>Over 40 students scored straight A's in the 2023 KCSE examinations.</p></div>
+      </div>
+      <div style="background:var(--off-white);border-radius:var(--radius-lg);padding:32px;">
+        <h3 style="margin-bottom:20px;">KCSE Mean Grade Trend</h3>
+        <table class="fee-table">
+          <thead><tr><th>Year</th><th>Mean Grade</th><th>Students Sat</th><th>A (Plain)</th><th>A-</th><th>B+ and Above</th></tr></thead>
+          <tbody>
+            <tr><td>2023</td><td>B+</td><td>298</td><td>12</td><td>31</td><td>87</td></tr>
+            <tr><td>2022</td><td>B</td><td>284</td><td>8</td><td>24</td><td>72</td></tr>
+            <tr><td>2021</td><td>B</td><td>276</td><td>7</td><td>20</td><td>68</td></tr>
+            <tr><td>2020</td><td>B-</td><td>261</td><td>5</td><td>18</td><td>60</td></tr>
+            <tr><td>2019</td><td>B</td><td>253</td><td>6</td><td>22</td><td>65</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+
+<!-- ==================== STAFF PAGE ==================== -->
+<div id="page-staff" class="page">
+  <div style="padding-top:36px;">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span>/</span>Our Staff</div>
+      <h1>Our Staff</h1>
+      <p>Meet the dedicated educators and administrators behind Greatbridge Academy</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Leadership</span>
+        <h2>Administration</h2>
+        <div class="divider-gold"></div>
+      </div>
+      <div class="staff-grid">
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">J</div></div><div class="staff-info"><h3>Dr. James Mwangi</h3><div class="position">Principal</div><div class="dept">Ph.D. Education, University of Nairobi</div><a href="mailto:principal@greatbridge.ac.ke" style="font-size:0.78rem;color:var(--gold);display:block;margin-top:8px;">principal@greatbridge.ac.ke</a></div></div>
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">G</div></div><div class="staff-info"><h3>Mrs. Grace Kipchumba</h3><div class="position">Deputy Principal (Academics)</div><div class="dept">M.Ed. Curriculum Studies</div></div></div>
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">P</div></div><div class="staff-info"><h3>Mr. Peter Otieno</h3><div class="position">Deputy Principal (Administration)</div><div class="dept">B.Ed. Educational Management</div></div></div>
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">A</div></div><div class="staff-info"><h3>Ms. Alice Wanjiku</h3><div class="position">Head of Guidance & Counselling</div><div class="dept">M.Sc. Counselling Psychology</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-off-white">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Our Teachers</span>
+        <h2>Teaching Staff</h2>
+        <div class="divider-gold"></div>
+        <p>Qualified, experienced, and passionate about education.</p>
+      </div>
+      <div class="staff-grid">
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">S</div></div><div class="staff-info"><h3>Mr. Samuel Koech</h3><div class="position">HOD Sciences</div><div class="dept">Sciences Department</div><div class="dept" style="margin-top:4px;">B.Sc. Ed. Biology/Chemistry</div></div></div>
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">M</div></div><div class="staff-info"><h3>Mrs. Mary Auma</h3><div class="position">HOD Mathematics</div><div class="dept">Mathematics Department</div><div class="dept" style="margin-top:4px;">B.Ed. Mathematics</div></div></div>
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">D</div></div><div class="staff-info"><h3>Mr. David Kiprop</h3><div class="position">HOD Languages</div><div class="dept">Languages Department</div><div class="dept" style="margin-top:4px;">M.A. English Literature</div></div></div>
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">F</div></div><div class="staff-info"><h3>Ms. Faith Chebet</h3><div class="position">HOD Humanities</div><div class="dept">Humanities Department</div><div class="dept" style="margin-top:4px;">B.Ed. History & Government</div></div></div>
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">R</div></div><div class="staff-info"><h3>Mr. Robert Mutai</h3><div class="position">Teacher</div><div class="dept">Business Studies Department</div><div class="dept" style="margin-top:4px;">B.Com. Accounting</div></div></div>
+        <div class="staff-card"><div class="staff-photo"><div class="staff-photo-placeholder">L</div></div><div class="staff-info"><h3>Ms. Lilian Njeru</h3><div class="position">Teacher</div><div class="dept">Sciences Department</div><div class="dept" style="margin-top:4px;">B.Sc. Ed. Physics/Mathematics</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm bg-navy" style="padding:60px 0;">
+    <div class="container text-center">
+      <span class="label-tag" style="color:var(--gold);">Careers</span>
+      <h2 style="color:white;margin-bottom:12px;">Join Our Team</h2>
+      <p style="color:rgba(255,255,255,0.6);max-width:500px;margin:0 auto 28px;">We are always looking for passionate, qualified educators who share our commitment to excellence.</p>
+      <a onclick="navigate('contact')" class="btn btn-primary">Send Your Application</a>
+    </div>
+  </section>
+  </div>
+</div>
+
+<!-- ==================== STUDENT LIFE PAGE ==================== -->
+<div id="page-student-life" class="page">
+  <div style="padding-top:36px;">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span>/</span>Student Life</div>
+      <h1>Student Life</h1>
+      <p>Beyond the classroom — a vibrant community of clubs, sports, and activities</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="principal-grid">
+        <div>
+          <span class="label-tag">Life at Greatbridge</span>
+          <h2>More Than Just Academics</h2>
+          <div class="divider-gold left"></div>
+          <p style="margin-bottom:16px;">At Greatbridge Academy, we believe that education extends well beyond the classroom. Our rich co-curricular programme gives students the opportunity to discover their passions, develop leadership skills, and build lifelong friendships.</p>
+          <p style="margin-bottom:16px;">From championship sports teams to award-winning debate clubs, from science olympiad teams to cultural dance troupes — there is something for every student at Greatbridge.</p>
+          <p>All students are encouraged to participate in at least one club and one sporting activity each term.</p>
+        </div>
+        <div class="principal-image-wrap">
+          <div class="principal-placeholder"><div class="placeholder-icon">S</div><span>Student Activities Photo</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-off-white">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Clubs and Societies</span>
+        <h2>Student Clubs</h2>
+        <div class="divider-gold"></div>
+      </div>
+      <div class="activities-grid">
+        <div class="activity-card"><div class="value-icon">D</div><h3>Debate Club</h3><p>Sharpening critical thinking and public speaking. Our debate team has won regional competitions for five consecutive years.</p></div>
+        <div class="activity-card"><div class="value-icon">S</div><h3>Science Club</h3><p>Hands-on experiments, science fairs, and participation in national and international science olympiads.</p></div>
+        <div class="activity-card"><div class="value-icon">D</div><h3>Drama and Theatre</h3><p>Annual drama festivals, script writing, acting, and backstage production. Our drama club has won county-level awards.</p></div>
+        <div class="activity-card"><div class="value-icon">M</div><h3>Music Club</h3><p>Choir, instrumental music, and music theory. We participate in the Kenya Music Festival each year.</p></div>
+        <div class="activity-card"><div class="value-icon">C</div><h3>Computer and Coding Club</h3><p>Programming, web design, robotics, and digital literacy workshops for students at all skill levels.</p></div>
+        <div class="activity-card"><div class="value-icon">J</div><h3>Junior Journalists</h3><p>Student newspaper, photography, and school blog. Developing the next generation of media professionals.</p></div>
+        <div class="activity-card"><div class="value-icon">E</div><h3>Environmental Club</h3><p>Tree planting, waste management, and environmental awareness campaigns. Caring for our school and community.</p></div>
+        <div class="activity-card"><div class="value-icon">R</div><h3>Red Cross Society</h3><p>First aid training, community service, blood donation drives, and disaster preparedness.</p></div>
+        <div class="activity-card"><div class="value-icon">F</div><h3>French Club</h3><p>French language and culture, exchange pen pals, and preparation for French language certifications.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Athletics and Sports</span>
+        <h2>Sports at Greatbridge</h2>
+        <div class="divider-gold"></div>
+        <p>We field competitive teams in a wide range of sports at county, regional, and national levels.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:28px;">
+        <div style="padding:28px;background:var(--navy);border-radius:var(--radius-lg);color:white;">
+          <h3 style="color:white;margin-bottom:16px;">Team Sports</h3>
+          <ul style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <li style="font-size:0.875rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Football (Boys)</li>
+            <li style="font-size:0.875rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Football (Girls)</li>
+            <li style="font-size:0.875rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Basketball (Boys)</li>
+            <li style="font-size:0.875rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Basketball (Girls)</li>
+            <li style="font-size:0.875rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Volleyball (Mixed)</li>
+            <li style="font-size:0.875rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Rugby (Boys)</li>
+            <li style="font-size:0.875rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Handball</li>
+            <li style="font-size:0.875rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Netball (Girls)</li>
+          </ul>
+        </div>
+        <div style="padding:28px;background:var(--gold-pale);border-radius:var(--radius-lg);">
+          <h3 style="margin-bottom:16px;">Individual Sports</h3>
+          <ul style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <li style="font-size:0.875rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Athletics (Track)</li>
+            <li style="font-size:0.875rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Cross Country</li>
+            <li style="font-size:0.875rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Swimming</li>
+            <li style="font-size:0.875rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Tennis</li>
+            <li style="font-size:0.875rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Badminton</li>
+            <li style="font-size:0.875rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Chess</li>
+            <li style="font-size:0.875rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Table Tennis</li>
+            <li style="font-size:0.875rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">+</span>Karate</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:28px;padding:28px;background:var(--off-white);border-radius:var(--radius-lg);border-left:3px solid var(--gold);">
+        <h3 style="margin-bottom:12px;">Recent Sports Achievements</h3>
+        <ul style="display:flex;flex-direction:column;gap:8px;">
+          <li style="font-size:0.9rem;display:flex;gap:10px;"><span style="color:var(--gold);font-weight:700;">2023</span> County Champions — Boys Football</li>
+          <li style="font-size:0.9rem;display:flex;gap:10px;"><span style="color:var(--gold);font-weight:700;">2023</span> Regional Finalists — Girls Basketball</li>
+          <li style="font-size:0.9rem;display:flex;gap:10px;"><span style="color:var(--gold);font-weight:700;">2022</span> National Qualifier — Cross Country (Individual, Form 3 Boys)</li>
+          <li style="font-size:0.9rem;display:flex;gap:10px;"><span style="color:var(--gold);font-weight:700;">2022</span> County Champions — Swimming (Mixed)</li>
+          <li style="font-size:0.9rem;display:flex;gap:10px;"><span style="color:var(--gold);font-weight:700;">2021</span> Regional Champions — Volleyball (Girls)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm bg-navy" style="padding:80px 0;">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag" style="color:var(--gold);">Residential Life</span>
+        <h2 style="color:white;">Boarding at Greatbridge</h2>
+        <div class="divider-gold"></div>
+      </div>
+      <div class="values-grid">
+        <div class="value-card" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);"><div class="value-icon" style="background:rgba(201,168,76,0.15);color:var(--gold);">H</div><h3 style="color:white;">Modern Dormitories</h3><p style="color:rgba(255,255,255,0.55);">Comfortable, well-maintained dormitories with proper bedding, adequate lighting, and secure storage for personal belongings.</p></div>
+        <div class="value-card" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);"><div class="value-icon" style="background:rgba(201,168,76,0.15);color:var(--gold);">F</div><h3 style="color:white;">Nutritious Meals</h3><p style="color:rgba(255,255,255,0.55);">Three balanced meals daily prepared by qualified cooks, with a varied menu that meets the nutritional needs of growing students.</p></div>
+        <div class="value-card" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);"><div class="value-icon" style="background:rgba(201,168,76,0.15);color:var(--gold);">S</div><h3 style="color:white;">Supervised Study</h3><p style="color:rgba(255,255,255,0.55);">Structured evening preps from 7:00 PM – 9:30 PM supervised by teachers, ensuring boarders stay on top of their academics.</p></div>
+        <div class="value-card" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);"><div class="value-icon" style="background:rgba(201,168,76,0.15);color:var(--gold);">M</div><h3 style="color:white;">Medical Care</h3><p style="color:rgba(255,255,255,0.55);">A resident nurse is on duty at all times. The school maintains a well-stocked clinic and transport for hospital visits.</p></div>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+
+<!-- ==================== NEWS PAGE ==================== -->
+<div id="page-news" class="page">
+  <div style="padding-top:36px;">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span>/</span>News</div>
+      <h1>News and Announcements</h1>
+      <p>Stay updated with the latest from Greatbridge Academy</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:start;">
+        <div>
+          <div style="display:flex;gap:10px;margin-bottom:32px;flex-wrap:wrap;">
+            <a class="btn btn-sm btn-dark">All</a>
+            <a class="btn btn-sm btn-outline">News</a>
+            <a class="btn btn-sm btn-outline">Announcements</a>
+            <a class="btn btn-sm btn-outline">Events</a>
+            <a class="btn btn-sm btn-outline">Results</a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:24px;">
+            <article style="display:grid;grid-template-columns:200px 1fr;gap:24px;background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;transition:var(--transition);" onmouseover="this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.boxShadow=''">
+              <div style="background:linear-gradient(135deg,#162032,#0D1B2A);height:160px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+                <span style="font-family:var(--font-display);color:rgba(255,255,255,0.1);font-size:1.5rem;letter-spacing:0.1em;">NEWS</span>
+                <span style="position:absolute;top:12px;left:12px;background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;">Announcement</span>
+              </div>
+              <div style="padding:20px 24px 20px 0;">
+                <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">15 November 2024</div>
+                <h3 style="font-size:1.05rem;margin-bottom:8px;">2024 KCSE Registration Now Open for Form 4 Students</h3>
+                <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px;">All Form 4 students are reminded to complete their KCSE registration by 30th November 2024. Contact the school office for the required documents and registration fee details...</p>
+                <a href="#" style="font-size:0.82rem;font-weight:600;color:var(--gold);display:inline-flex;align-items:center;gap:6px;">Read More <span>&#8594;</span></a>
+              </div>
+            </article>
+            <article style="display:grid;grid-template-columns:200px 1fr;gap:24px;background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;transition:var(--transition);" onmouseover="this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.boxShadow=''">
+              <div style="background:linear-gradient(135deg,#162032,#0D1B2A);height:160px;display:flex;align-items:center;justify-content:center;position:relative;">
+                <span style="font-family:var(--font-display);color:rgba(255,255,255,0.1);font-size:1.5rem;">NEWS</span>
+                <span style="position:absolute;top:12px;left:12px;background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;">Achievement</span>
+              </div>
+              <div style="padding:20px 24px 20px 0;">
+                <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">2 November 2024</div>
+                <h3 style="font-size:1.05rem;margin-bottom:8px;">Greatbridge Boys Win County Football Championship</h3>
+                <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px;">Our boys football team has won the Uasin Gishu County championship for the third consecutive year, defeating Eldoret High School in the final...</p>
+                <a href="#" style="font-size:0.82rem;font-weight:600;color:var(--gold);display:inline-flex;align-items:center;gap:6px;">Read More <span>&#8594;</span></a>
+              </div>
+            </article>
+            <article style="display:grid;grid-template-columns:200px 1fr;gap:24px;background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;transition:var(--transition);" onmouseover="this.style.boxShadow='var(--shadow-md)'" onmouseout="this.style.boxShadow=''">
+              <div style="background:linear-gradient(135deg,#162032,#0D1B2A);height:160px;display:flex;align-items:center;justify-content:center;position:relative;">
+                <span style="font-family:var(--font-display);color:rgba(255,255,255,0.1);font-size:1.5rem;">NEWS</span>
+                <span style="position:absolute;top:12px;left:12px;background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;">Event</span>
+              </div>
+              <div style="padding:20px 24px 20px 0;">
+                <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">20 October 2024</div>
+                <h3 style="font-size:1.05rem;margin-bottom:8px;">Annual Science Fair Set for December — Registrations Open</h3>
+                <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px;">The annual Greatbridge Science Fair will be held on 5th December 2024. Students across all forms are encouraged to participate with projects in any science discipline...</p>
+                <a href="#" style="font-size:0.82rem;font-weight:600;color:var(--gold);display:inline-flex;align-items:center;gap:6px;">Read More <span>&#8594;</span></a>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div style="position:sticky;top:100px;">
+          <div style="background:var(--off-white);border-radius:var(--radius-lg);padding:24px;margin-bottom:24px;">
+            <h3 style="font-size:0.95rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-200);">Upcoming Events</h3>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:44px;height:48px;background:var(--navy);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--gold);line-height:1;">5</span><span style="font-size:0.6rem;color:rgba(255,255,255,0.5);letter-spacing:0.05em;text-transform:uppercase;">Dec</span></div>
+                <div><h4 style="font-size:0.875rem;color:var(--navy);margin-bottom:2px;">Annual Science Fair 2024</h4><p style="font-size:0.78rem;color:var(--text-muted);">School Grounds</p></div>
+              </div>
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:44px;height:48px;background:var(--navy);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--gold);line-height:1;">10</span><span style="font-size:0.6rem;color:rgba(255,255,255,0.5);letter-spacing:0.05em;text-transform:uppercase;">Dec</span></div>
+                <div><h4 style="font-size:0.875rem;color:var(--navy);margin-bottom:2px;">Prize Giving Day</h4><p style="font-size:0.78rem;color:var(--text-muted);">School Hall</p></div>
+              </div>
+            </div>
+          </div>
+          <div style="background:var(--navy);border-radius:var(--radius-lg);padding:24px;text-align:center;">
+            <h3 style="color:white;font-size:0.95rem;margin-bottom:8px;">Apply Now</h3>
+            <p style="color:rgba(255,255,255,0.6);font-size:0.82rem;margin-bottom:16px;">Admissions are now open for the 2025 academic year.</p>
+            <a onclick="navigate('admissions')" class="btn btn-primary" style="width:100%;justify-content:center;">Apply for Admission</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+
+<!-- ==================== GALLERY PAGE ==================== -->
+<div id="page-gallery" class="page">
+  <div style="padding-top:36px;">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span>/</span>Gallery</div>
+      <h1>Gallery</h1>
+      <p>A visual record of life and achievement at Greatbridge Academy</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div style="text-align:center;padding:60px 0;">
+        <p style="color:var(--text-muted);margin-bottom:16px;">Gallery photos will appear here once uploaded by the admin.</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:700px;margin:0 auto;opacity:0.25;">
+          <div style="background:var(--gray-200);height:180px;border-radius:var(--radius-lg);"></div>
+          <div style="background:var(--gray-200);height:240px;border-radius:var(--radius-lg);"></div>
+          <div style="background:var(--gray-200);height:180px;border-radius:var(--radius-lg);"></div>
+          <div style="background:var(--gray-200);height:220px;border-radius:var(--radius-lg);"></div>
+          <div style="background:var(--gray-200);height:160px;border-radius:var(--radius-lg);"></div>
+          <div style="background:var(--gray-200);height:220px;border-radius:var(--radius-lg);"></div>
+        </div>
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-top:24px;">Contact the school admin to upload gallery images.</p>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+
+<!-- ==================== DOWNLOADS PAGE ==================== -->
+<div id="page-downloads" class="page">
+  <div style="padding-top:36px;">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span>/</span>Downloads</div>
+      <h1>Downloads</h1>
+      <p>Access forms, documents, and school publications</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container" style="max-width:800px;">
+      <div style="margin-bottom:40px;">
+        <h2 style="font-size:1.1rem;margin-bottom:4px;">Admission and Application Forms</h2>
+        <div class="divider-gold left" style="margin-bottom:20px;"></div>
+        <div class="download-item"><div class="download-icon" style="font-size:0.75rem;font-weight:700;">PDF</div><div class="download-meta"><h4>Form 1 Admission Application Form 2025</h4><p>Complete admission application form for new Form 1 students</p></div><span style="font-size:0.78rem;color:var(--text-muted);margin-right:16px;">245 KB</span><a href="#" class="btn btn-sm btn-primary">Download</a></div>
+        <div class="download-item"><div class="download-icon" style="font-size:0.75rem;font-weight:700;">PDF</div><div class="download-meta"><h4>Transfer Form — Forms 2, 3 & 4</h4><p>Application form for students transferring from other schools</p></div><span style="font-size:0.78rem;color:var(--text-muted);margin-right:16px;">210 KB</span><a href="#" class="btn btn-sm btn-primary">Download</a></div>
+        <div class="download-item"><div class="download-icon" style="font-size:0.75rem;font-weight:700;">PDF</div><div class="download-meta"><h4>Bursary Application Form 2025</h4><p>Financial assistance application form — January intake</p></div><span style="font-size:0.78rem;color:var(--text-muted);margin-right:16px;">180 KB</span><a href="#" class="btn btn-sm btn-primary">Download</a></div>
+      </div>
+      <div style="margin-bottom:40px;">
+        <h2 style="font-size:1.1rem;margin-bottom:4px;">School Documents</h2>
+        <div class="divider-gold left" style="margin-bottom:20px;"></div>
+        <div class="download-item"><div class="download-icon" style="font-size:0.75rem;font-weight:700;">PDF</div><div class="download-meta"><h4>Fee Structure 2024–2025</h4><p>Complete fee schedule for all forms and categories</p></div><span style="font-size:0.78rem;color:var(--text-muted);margin-right:16px;">120 KB</span><a href="#" class="btn btn-sm btn-primary">Download</a></div>
+        <div class="download-item"><div class="download-icon" style="font-size:0.75rem;font-weight:700;">PDF</div><div class="download-meta"><h4>Student Kit List 2025</h4><p>Complete list of items required for boarding and day students</p></div><span style="font-size:0.78rem;color:var(--text-muted);margin-right:16px;">95 KB</span><a href="#" class="btn btn-sm btn-primary">Download</a></div>
+        <div class="download-item"><div class="download-icon" style="font-size:0.75rem;font-weight:700;">PDF</div><div class="download-meta"><h4>School Rules and Regulations</h4><p>Student code of conduct and school policies</p></div><span style="font-size:0.78rem;color:var(--text-muted);margin-right:16px;">310 KB</span><a href="#" class="btn btn-sm btn-primary">Download</a></div>
+      </div>
+      <div>
+        <h2 style="font-size:1.1rem;margin-bottom:4px;">Reports and Publications</h2>
+        <div class="divider-gold left" style="margin-bottom:20px;"></div>
+        <div class="download-item"><div class="download-icon" style="font-size:0.75rem;font-weight:700;">PDF</div><div class="download-meta"><h4>2023 Annual Report</h4><p>School performance report and highlights for 2023</p></div><span style="font-size:0.78rem;color:var(--text-muted);margin-right:16px;">1.2 MB</span><a href="#" class="btn btn-sm btn-primary">Download</a></div>
+        <div class="download-item"><div class="download-icon" style="font-size:0.75rem;font-weight:700;">PDF</div><div class="download-meta"><h4>Term 3 2024 Newsletter</h4><p>Latest school newsletter with news and achievements</p></div><span style="font-size:0.78rem;color:var(--text-muted);margin-right:16px;">850 KB</span><a href="#" class="btn btn-sm btn-primary">Download</a></div>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+
+<!-- ==================== CONTACT PAGE ==================== -->
+<div id="page-contact" class="page">
+  <div style="padding-top:36px;">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span>/</span>Contact</div>
+      <h1>Contact Us</h1>
+      <p>We are here to help. Reach us through any of the channels below.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <span class="label-tag">Get in Touch</span>
+          <h2>Contact Information</h2>
+          <div class="divider-gold left" style="margin-bottom:32px;"></div>
+          <div class="contact-info-item"><div class="contact-icon">L</div><div><h4>Physical Address</h4><p>Greatbridge Academy<br>Off Eldoret-Kapsabet Road<br>Eldoret, Uasin Gishu County<br>Kenya</p></div></div>
+          <div class="contact-info-item"><div class="contact-icon">P</div><div><h4>Phone Numbers</h4><p>Main Office: <a href="tel:+254712345678" style="color:var(--gold);">+254 712 345 678</a><br>Admissions: <a href="tel:+254733456789" style="color:var(--gold);">+254 733 456 789</a><br>Principal's Office: <a href="tel:+254722345678" style="color:var(--gold);">+254 722 345 678</a></p></div></div>
+          <div class="contact-info-item"><div class="contact-icon">@</div><div><h4>Email Addresses</h4><p>General: <a href="mailto:info@greatbridge.ac.ke" style="color:var(--gold);">info@greatbridge.ac.ke</a><br>Admissions: <a href="mailto:admissions@greatbridge.ac.ke" style="color:var(--gold);">admissions@greatbridge.ac.ke</a><br>Principal: <a href="mailto:principal@greatbridge.ac.ke" style="color:var(--gold);">principal@greatbridge.ac.ke</a></p></div></div>
+          <div class="contact-info-item"><div class="contact-icon">T</div><div><h4>Office Hours</h4><p>Monday to Friday: 7:00 AM - 5:00 PM<br>Saturday: 8:00 AM - 12:00 PM<br>Sunday and Public Holidays: Closed</p></div></div>
+          <div class="map-container" style="margin-top:32px;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127646.52!2d35.2698!3d0.5143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1781050ec574b4c9%3A0x5d0fca2eac8bad8a!2sEldoret!5e0!3m2!1sen!2ske!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Greatbridge Academy Location"></iframe>
+          </div>
+        </div>
+        <div>
+          <div style="background:var(--off-white);border-radius:var(--radius-lg);padding:36px;">
+            <span class="label-tag">Send a Message</span>
+            <h2 style="margin-bottom:24px;">Write to Us</h2>
+            <form onsubmit="handleContactForm(event)">
+              <div class="form-row">
+                <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-control" required placeholder="Your full name"></div>
+                <div class="form-group"><label class="form-label">Email Address *</label><input type="email" class="form-control" required placeholder="your@email.com"></div>
+              </div>
+              <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-control" placeholder="+254 7XX XXX XXX"></div>
+              <div class="form-group"><label class="form-label">Subject</label><select class="form-control"><option value="">Select a subject</option><option>Admissions Inquiry</option><option>Fee Inquiry</option><option>Academic Information</option><option>Careers / Employment</option><option>General Inquiry</option></select></div>
+              <div class="form-group"><label class="form-label">Message *</label><textarea class="form-control" rows="5" required placeholder="How can we help you?"></textarea></div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+
+<!-- ==================== ADMISSIONS PAGE ==================== -->
+<div id="page-admissions" class="page">
+  <div style="padding-top:36px;">
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="navigate('home')">Home</a><span>/</span>Admissions</div>
+      <h1>Admissions</h1>
+      <p>Begin your journey to excellence at Greatbridge Academy</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:start;">
+        <div>
+          <span class="label-tag">How to Apply</span>
+          <h2>Admission Process</h2>
+          <div class="divider-gold left"></div>
+          <p style="margin-bottom:28px;color:var(--text-muted);">We welcome applications from academically motivated students who wish to join our community of learners.</p>
+          <div class="steps-list">
+            <div class="step-item"><div class="step-num">1</div><div class="step-content"><h4>Download Application Form</h4><p>Download and complete the admission application form from our downloads page or collect a physical copy from the school office.</p></div></div>
+            <div class="step-item"><div class="step-num">2</div><div class="step-content"><h4>Submit Documents</h4><p>Attach certified copies of birth certificate, previous school reports (last 3 terms), and KCPE results where applicable.</p></div></div>
+            <div class="step-item"><div class="step-num">3</div><div class="step-content"><h4>Entrance Assessment</h4><p>Shortlisted candidates will be invited for an entrance assessment covering Mathematics and English.</p></div></div>
+            <div class="step-item"><div class="step-num">4</div><div class="step-content"><h4>Interview and Offer</h4><p>Successful candidates and their parents will be invited for an interview. Admission letters are issued within two weeks.</p></div></div>
+            <div class="step-item"><div class="step-num">5</div><div class="step-content"><h4>Fee Payment and Reporting</h4><p>Pay the prescribed fees and report on the indicated date with all required items from the school kit list.</p></div></div>
+          </div>
+          <div style="margin-top:36px;">
+            <h3 style="margin-bottom:16px;font-size:1rem;">Admission Forms</h3>
+            <div class="download-item" style="display:flex;text-decoration:none;"><div class="download-icon">PDF</div><div class="download-meta"><h4>Form 1 Admission Application 2025</h4><p>Download and complete</p></div><a onclick="navigate('downloads')" class="btn btn-sm btn-primary">Download</a></div>
+          </div>
+        </div>
+        <div>
+          <div style="margin-bottom:40px;">
+            <span class="label-tag">Fees</span>
+            <h2>Fee Structure 2024</h2>
+            <div class="divider-gold left" style="margin-bottom:20px;"></div>
+            <div style="overflow-x:auto;">
+              <table class="fee-table">
+                <thead><tr><th>Item</th><th>Form 1 & 2</th><th>Form 3 & 4</th></tr></thead>
+                <tbody>
+                  <tr><td>Tuition Fees</td><td>KSh 18,000</td><td>KSh 20,000</td></tr>
+                  <tr><td>Boarding (per term)</td><td>KSh 22,000</td><td>KSh 22,000</td></tr>
+                  <tr><td>Lunch (Day Scholars)</td><td>KSh 5,000</td><td>KSh 5,000</td></tr>
+                  <tr><td>Activity Fee</td><td>KSh 3,000</td><td>KSh 3,500</td></tr>
+                  <tr><td>ICT Fee</td><td>KSh 2,500</td><td>KSh 2,500</td></tr>
+                  <tr><td>Library Fee</td><td>KSh 1,500</td><td>KSh 1,500</td></tr>
+                  <tr class="total"><td><strong>Total (Boarder)</strong></td><td><strong>KSh 47,000</strong></td><td><strong>KSh 49,500</strong></td></tr>
+                  <tr class="total"><td><strong>Total (Day Scholar)</strong></td><td><strong>KSh 30,000</strong></td><td><strong>KSh 32,500</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:10px;">Fees are payable at the beginning of each term. Discounts available for siblings. Bursary applications open every January.</p>
+          </div>
+          <div style="padding:28px;background:var(--off-white);border-radius:var(--radius-lg);">
+            <h3 style="margin-bottom:16px;">Admission Requirements</h3>
+            <ul style="display:flex;flex-direction:column;gap:10px;">
+              <li style="display:flex;gap:10px;font-size:0.9rem;align-items:flex-start;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">+</span>Minimum Grade C+ (plus) in KCPE for Form 1 entry</li>
+              <li style="display:flex;gap:10px;font-size:0.9rem;align-items:flex-start;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">+</span>Certified copy of KCPE certificate or Primary school leaving certificate</li>
+              <li style="display:flex;gap:10px;font-size:0.9rem;align-items:flex-start;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">+</span>Three recent passport-size photographs</li>
+              <li style="display:flex;gap:10px;font-size:0.9rem;align-items:flex-start;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">+</span>Copy of birth certificate</li>
+              <li style="display:flex;gap:10px;font-size:0.9rem;align-items:flex-start;"><span style="color:var(--gold);font-weight:700;flex-shrink:0;">+</span>School reports for the last three terms</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-off-white">
+    <div class="container">
+      <div class="section-header">
+        <span class="label-tag">Apply Online</span>
+        <h2>Submit Your Application</h2>
+        <div class="divider-gold"></div>
+        <p>Complete the form below and our admissions team will be in touch within 3 working days.</p>
+      </div>
+      <div style="max-width:800px;margin:0 auto;background:white;border-radius:var(--radius-lg);border:1px solid var(--gray-200);padding:40px;">
+        <form id="admissionsForm" onsubmit="handleAdmissionsForm(event)">
+          <h3 style="margin-bottom:24px;font-size:1.1rem;">Student Information</h3>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Student Full Name *</label><input type="text" name="student_name" class="form-control" required placeholder="As it appears on birth certificate"></div>
+            <div class="form-group"><label class="form-label">Date of Birth *</label><input type="date" name="date_of_birth" class="form-control" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Gender *</label><select name="gender" class="form-control" required><option value="">Select Gender</option><option value="male">Male</option><option value="female">Female</option></select></div>
+            <div class="form-group"><label class="form-label">Grade Applying For *</label><select name="grade_applying" class="form-control" required><option value="">Select Grade</option><option>Grade 7 (CBC)</option><option>Grade 8 (CBC)</option><option>Grade 9 (CBC)</option><option>Form 1</option><option>Form 2 (Transfer)</option><option>Form 3 (Transfer)</option></select></div>
+          </div>
+          <div class="form-group"><label class="form-label">Previous School</label><input type="text" name="previous_school" class="form-control" placeholder="Name of previous school"></div>
+          <h3 style="margin:28px 0 20px;font-size:1.1rem;">Parent / Guardian Information</h3>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Parent/Guardian Full Name *</label><input type="text" name="parent_name" class="form-control" required></div>
+            <div class="form-group"><label class="form-label">Email Address *</label><input type="email" name="parent_email" class="form-control" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Phone Number *</label><input type="tel" name="parent_phone" class="form-control" required placeholder="+254 7XX XXX XXX"></div>
+            <div class="form-group"><label class="form-label">Residential Address</label><input type="text" name="address" class="form-control" placeholder="Town / Estate"></div>
+          </div>
+          <div class="form-group"><label class="form-label">Additional Information</label><textarea name="additional_info" class="form-control" rows="3" placeholder="Any special considerations, medical conditions, or other information we should know..."></textarea></div>
+          <div style="margin-top:24px;"><button type="submit" class="btn btn-primary btn-lg">Submit Application</button></div>
+        </form>
+        <div id="formSuccess" style="display:none;text-align:center;padding:40px;">
+          <div style="width:64px;height:64px;background:var(--gold-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:2rem;color:var(--gold);">✓</div>
+          <h3>Application Submitted!</h3>
+          <p style="color:var(--text-muted);margin-top:8px;">Thank you for your application. Our admissions team will be in touch within 3 working days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+
+<!-- ==================== SHARED FOOTER ==================== -->
+<template id="footer-template">
+</template>
+
+<!-- FOOTER (rendered per page at bottom) -->
+<footer class="footer" id="siteFooter">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a onclick="navigate('home')" class="nav-logo" style="margin-bottom:20px;display:inline-flex;">
+            <div class="nav-logo-icon">GA</div>
+            <div class="nav-logo-text"><span class="school-name">Greatbridge Academy</span><span class="school-motto">Educating for Tomorrow</span></div>
+          </a>
+          <p>Providing quality education that builds character, nurtures talent, and prepares students for the challenges of tomorrow.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a onclick="navigate('about')">About Us</a></li>
+            <li><a onclick="navigate('academics')">Academics</a></li>
+            <li><a onclick="navigate('admissions')">Admissions</a></li>
+            <li><a onclick="navigate('staff')">Our Staff</a></li>
+            <li><a onclick="navigate('student-life')">Student Life</a></li>
+            <li><a onclick="navigate('news')">News</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a onclick="navigate('gallery')">Photo Gallery</a></li>
+            <li><a onclick="navigate('downloads')">Downloads</a></li>
+            <li><a onclick="navigate('news')">Exam Results</a></li>
+            <li><a onclick="navigate('news')">Events</a></li>
+            <li><a onclick="navigate('contact')">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="contact-line"><strong>P.O</strong><span>P.O Box 12345, Eldoret</span></div>
+          <div class="contact-line"><strong>Tel</strong><span>+254 712 345 678</span></div>
+          <div class="contact-line"><strong>Tel</strong><span>+254 733 456 789</span></div>
+          <div class="contact-line"><strong>@</strong><span>info@greatbridge.ac.ke</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="footer-bottom">
+      <p>&copy; 2025 Greatbridge Academy. All rights reserved.</p>
+      <div style="display:flex;gap:20px;">
+        <a onclick="navigate('admissions')">Admissions</a>
+        <a onclick="navigate('contact')">Contact</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- SUCCESS TOAST -->
+<div id="toast" style="position:fixed;bottom:24px;right:24px;background:var(--green);color:white;padding:14px 20px;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);font-size:0.875rem;z-index:9999;opacity:0;transition:opacity 0.3s ease;pointer-events:none;">Message sent successfully!</div>
+
 <script>
-/* ═══════════════════════════════════════════════════════
-   DATA
-   ═══════════════════════════════════════════════════════ */
+// ====== SPA ROUTER ======
+const pages = {
+  'home': 'page-home',
+  'about': 'page-about',
+  'academics': 'page-academics',
+  'staff': 'page-staff',
+  'student-life': 'page-student-life',
+  'news': 'page-news',
+  'gallery': 'page-gallery',
+  'downloads': 'page-downloads',
+  'contact': 'page-contact',
+  'admissions': 'page-admissions'
+};
 
-const SCHEDULE = [
-  { id:'a0',  start:'05:00', end:'05:30', name:'Prayer & Meditation',     cat:'Spirit'   },
-  { id:'a1',  start:'05:30', end:'06:30', name:'Web Development',         cat:'Dev'      },
-  { id:'a2',  start:'06:30', end:'06:45', name:'Break',                   cat:'Break',   brk:true },
-  { id:'a3',  start:'06:45', end:'07:45', name:'Python (Deep Work)',       cat:'Python'   },
-  { id:'a4',  start:'07:45', end:'08:00', name:'Break',                   cat:'Break',   brk:true },
-  { id:'a5',  start:'08:00', end:'09:00', name:'Cleanliness',             cat:'Health'   },
-  { id:'a6',  start:'09:00', end:'09:15', name:'Break',                   cat:'Break',   brk:true },
-  { id:'a7',  start:'09:15', end:'10:15', name:'Python Practice',         cat:'Python'   },
-  { id:'a8',  start:'10:15', end:'10:30', name:'Break',                   cat:'Break',   brk:true },
-  { id:'a9',  start:'10:30', end:'11:30', name:'Update Groups & Clients', cat:'Business' },
-  { id:'a10', start:'11:30', end:'11:45', name:'Break',                   cat:'Break',   brk:true },
-  { id:'a11', start:'11:45', end:'12:45', name:'Exercise',                cat:'Health'   },
-  { id:'a12', start:'12:45', end:'13:00', name:'Freshen Up',              cat:'Health'   },
-  { id:'a13', start:'13:00', end:'14:00', name:'Lunch & Rest',            cat:'Rest'     },
-  { id:'a14', start:'14:00', end:'15:00', name:'Marketing',               cat:'Business' },
-  { id:'a15', start:'15:00', end:'15:15', name:'Break',                   cat:'Break',   brk:true },
-  { id:'a16', start:'15:15', end:'16:15', name:'Marketing Continuation',  cat:'Business' },
-  { id:'a17', start:'16:15', end:'17:15', name:'Family & Friends',        cat:'Social'   },
-  { id:'a18', start:'17:15', end:'17:30', name:'Break',                   cat:'Break',   brk:true },
-  { id:'a19', start:'17:30', end:'18:00', name:'Communication Skills',    cat:'Growth'   },
-  { id:'a20', start:'18:00', end:'18:30', name:'English Improvement',     cat:'Language' },
-  { id:'a21', start:'18:30', end:'18:45', name:'Break',                   cat:'Break',   brk:true },
-  { id:'a22', start:'18:45', end:'19:15', name:'Learn German',            cat:'Language' },
-  { id:'a23', start:'19:15', end:'19:45', name:'Financial Literacy',      cat:'Growth'   },
-  { id:'a24', start:'19:45', end:'20:15', name:'Life Skills & Business',  cat:'Growth'   },
-  { id:'a25', start:'20:15', end:'20:30', name:'Break',                   cat:'Break',   brk:true },
-  { id:'a26', start:'20:30', end:'21:00', name:'Daily Review',            cat:'Growth'   },
-  { id:'a27', start:'21:00', end:'22:00', name:'Flexible Time',           cat:'Rest'     },
-  { id:'a28', start:'22:00', end:'22:30', name:'Plan Next Day',           cat:'Growth'   },
-  { id:'a29', start:'22:30', end:'23:00', name:'Sleep Preparation',       cat:'Rest'     },
-];
-
-const STREAK_DEFS = [
-  { key:'prayer',    name:'Prayer & Meditation',   ids:['a0'],          target:30 },
-  { key:'webdev',    name:'Web Development',        ids:['a1'],          target:30 },
-  { key:'python',    name:'Python (Deep Work)',     ids:['a3','a7'],     target:21 },
-  { key:'health',    name:'Cleanliness & Exercise', ids:['a5','a11'],    target:21 },
-  { key:'marketing', name:'Marketing',              ids:['a14','a16'],   target:14 },
-  { key:'language',  name:'Languages',              ids:['a20','a22'],   target:21 },
-  { key:'growth',    name:'Personal Growth',        ids:['a19','a23','a24'], target:30 },
-  { key:'review',    name:'Daily Review & Planning',ids:['a26','a28'],   target:14 },
-];
-
-const REWARDS = [
-  { days:3,   title:'Getting Started',      desc:'3 days of consistent routine. The habit is beginning to form.',               gift:'Treat yourself to your favourite meal. You earned it.' },
-  { days:7,   title:'One Full Week',        desc:'7 consecutive days. A week of discipline is building real character.',        gift:'Buy a book you have been wanting. Knowledge compounds.' },
-  { days:14,  title:'Two-Week Warrior',     desc:'14 days straight. Your mornings are no longer a struggle.',                   gift:'Take a half-day off and do something you genuinely enjoy — no guilt.' },
-  { days:21,  title:'Habit Locked In',      desc:'21 days. The routine is now part of who you are.',                            gift:'Invest in a premium online course or development tool.' },
-  { days:30,  title:'The Iron Month',       desc:'30 days of full daily discipline. This is rare. You are not average.',        gift:'Make a major self-investment — laptop, certification, or business software.' },
-  { days:60,  title:'Unstoppable',          desc:'Two months of consistency. You have changed at a deep level.',                gift:'Take a weekend trip. Rest is part of the strategy, not the enemy.' },
-  { days:90,  title:'The 90-Day Standard',  desc:'90 days. You have transformed your life. This is elite-level discipline.',    gift:'Launch your first income stream or purchase your first real asset.' },
-  { days:365, title:'Full Year Champion',   desc:'365 days. An entire year. Abednego, you are a completely different person.',  gift:'Major celebration. A trip, a gift to yourself, and your first serious investment.' },
-];
-
-const VERSES = [
-  { text:'For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.', ref:'Jeremiah 29:11' },
-  { text:'I can do all things through Christ who strengthens me.', ref:'Philippians 4:13' },
-  { text:'Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.', ref:'Joshua 1:9' },
-  { text:'Commit to the Lord whatever you do, and he will establish your plans.', ref:'Proverbs 16:3' },
-  { text:'Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.', ref:'Proverbs 3:5-6' },
-  { text:'But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.', ref:'Isaiah 40:31' },
-  { text:'And we know that in all things God works for the good of those who love him, who have been called according to his purpose.', ref:'Romans 8:28' },
-  { text:'For God has not given us a spirit of fear, but of power and of love and of a sound mind.', ref:'2 Timothy 1:7' },
-  { text:'Delight yourself in the Lord, and he will give you the desires of your heart.', ref:'Psalm 37:4' },
-  { text:'Do not conform to the pattern of this world, but be transformed by the renewing of your mind.', ref:'Romans 12:2' },
-  { text:'The Lord is my shepherd; I shall not want.', ref:'Psalm 23:1' },
-  { text:'Ask and it will be given to you; seek and you will find; knock and the door will be opened to you.', ref:'Matthew 7:7' },
-  { text:'No weapon formed against you shall prosper, and every tongue which rises against you in judgment you shall condemn.', ref:'Isaiah 54:17' },
-  { text:'For we walk by faith, not by sight.', ref:'2 Corinthians 5:7' },
-  { text:'The Lord your God is with you, the Mighty Warrior who saves. He will take great delight in you.', ref:'Zephaniah 3:17' },
-];
-
-const QUOTES = [
-  { text:'Discipline is the bridge between goals and accomplishment.', author:'Jim Rohn' },
-  { text:'Success is not final, failure is not fatal: it is the courage to continue that counts.', author:'Winston Churchill' },
-  { text:'It always seems impossible until it is done.', author:'Nelson Mandela' },
-  { text:'Your time is limited, so do not waste it living someone else\'s life.', author:'Steve Jobs' },
-  { text:'An investment in knowledge pays the best interest.', author:'Benjamin Franklin' },
-  { text:'Do not watch the clock; do what it does. Keep going.', author:'Sam Levenson' },
-  { text:'We are what we repeatedly do. Excellence, then, is not an act, but a habit.', author:'Aristotle' },
-  { text:'Motivation gets you going, but discipline keeps you growing.', author:'John C. Maxwell' },
-  { text:'Formal education will make you a living; self-education will make you a fortune.', author:'Jim Rohn' },
-  { text:'Do not save what is left after spending; instead spend what is left after saving.', author:'Warren Buffett' },
-  { text:'You do not rise to the level of your goals, you fall to the level of your systems.', author:'James Clear' },
-  { text:'Every master was once a disaster.', author:'T. Harv Eker' },
-  { text:'The secret of getting ahead is getting started.', author:'Mark Twain' },
-  { text:'Hard work beats talent when talent does not work hard.', author:'Tim Notke' },
-  { text:'The man who moves a mountain begins by carrying away small stones.', author:'Confucius' },
-  { text:'Success is the sum of small efforts repeated day in and day out.', author:'Robert Collier' },
-  { text:'Rich people have big libraries. Poor people have big televisions.', author:'Jim Rohn' },
-  { text:'The pain of discipline is far less than the pain of regret.', author:'Jim Rohn' },
-];
-
-/* ═══════════════════════════════════════════════════════
-   STATE  (localStorage)
-   ═══════════════════════════════════════════════════════ */
-
-const TODAY = new Date().toISOString().slice(0,10);
-
-function loadState() {
-  try { return JSON.parse(localStorage.getItem('ao2_state') || '{}'); }
-  catch { return {}; }
+function navigate(page) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Show target
+  const target = document.getElementById(pages[page] || 'page-home');
+  if (target) target.classList.add('active');
+  // Update nav active state
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  // Scroll to top
+  window.scrollTo(0, 0);
+  // Close mobile menu
+  document.getElementById('navLinks').classList.remove('open');
+  // Re-run reveal animations
+  setTimeout(initReveal, 100);
+  // Re-run counters on home
+  if (page === 'home') setTimeout(initCounters, 200);
 }
-function saveState() { localStorage.setItem('ao2_state', JSON.stringify(ST)); }
 
-let ST = loadState();
-if (!ST.days)    ST.days = {};
-if (!ST.days[TODAY]) ST.days[TODAY] = [];
-if (!ST.streaks) ST.streaks = {};
-STREAK_DEFS.forEach(d => {
-  if (!ST.streaks[d.key]) ST.streaks[d.key] = { count:0, last:null, hist:[] };
+// ====== MOBILE MENU ======
+document.getElementById('hamburger').addEventListener('click', function() {
+  document.getElementById('navLinks').classList.toggle('open');
 });
-saveState();
 
-function isDone(id) { return ST.days[TODAY].includes(id); }
-
-function setDone(id, val) {
-  if (val && !isDone(id)) {
-    ST.days[TODAY].push(id);
-  } else if (!val) {
-    ST.days[TODAY] = ST.days[TODAY].filter(x => x !== id);
-  }
-  saveState();
-  recalcStreaks();
-}
-
-/* ═══════════════════════════════════════════════════════
-   CLOCK
-   ═══════════════════════════════════════════════════════ */
-
-function tickClock() {
-  const n = new Date();
-  document.getElementById('hh').textContent = String(n.getHours()).padStart(2,'0');
-  document.getElementById('mm').textContent = String(n.getMinutes()).padStart(2,'0');
-  document.getElementById('ss').textContent = String(n.getSeconds()).padStart(2,'0');
-  const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('dateDisp').textContent =
-    days[n.getDay()] + ' · ' + n.getDate() + ' ' + months[n.getMonth()] + ' ' + n.getFullYear();
-}
-setInterval(tickClock, 1000);
-tickClock();
-
-/* ═══════════════════════════════════════════════════════
-   SCHEDULE
-   ═══════════════════════════════════════════════════════ */
-
-function toMins(t) { const [h,m]=t.split(':').map(Number); return h*60+m; }
-function nowMins() { const n=new Date(); return n.getHours()*60+n.getMinutes(); }
-
-function buildSchedule() {
-  const list = document.getElementById('schedList');
-  list.innerHTML = '';
-  const nm = nowMins();
-
-  SCHEDULE.forEach((bl, i) => {
-    const s = toMins(bl.start), e = toMins(bl.end);
-    const active = nm >= s && nm < e;
-    const done   = !bl.brk && isDone(bl.id);
-
-    const row = document.createElement('div');
-    row.id = 'row_' + i;
-    row.className = 'sched-row' +
-      (bl.brk  ? ' is-break'  : '') +
-      (active  ? ' is-active' : '') +
-      (done    ? ' is-done'   : '');
-
-    if (bl.brk) {
-      row.innerHTML = `
-        <span class="sched-time">${bl.start} – ${bl.end}</span>
-        <span class="sched-name" style="color:var(--muted)">${bl.name}</span>`;
-    } else {
-      row.innerHTML = `
-        <span class="sched-time">${bl.start} – ${bl.end}</span>
-        <span class="sched-name">${bl.name}</span>
-        <span class="sched-cat">${bl.cat}</span>
-        <button class="check-btn ${done?'done':''}" onclick="toggleDone(${i})" title="${done?'Unmark':'Mark complete'}">
-          <svg viewBox="0 0 16 16">
-            <path d="M3 8l3.5 3.5L13 5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>`;
-    }
-    list.appendChild(row);
-
-    if (active) updateActiveBanner(bl, s, e, nm);
-  });
-
-  updateRing();
-}
-
-function toggleDone(i) {
-  const bl = SCHEDULE[i];
-  if (bl.brk) return;
-  const nowDone = !isDone(bl.id);
-  setDone(bl.id, nowDone);
-
-  const row = document.getElementById('row_' + i);
-  const btn = row.querySelector('.check-btn');
-  if (nowDone) {
-    row.classList.add('is-done');
-    btn.classList.add('done');
-    showToast(bl.name + ' marked complete');
-  } else {
-    row.classList.remove('is-done');
-    btn.classList.remove('done');
-    showToast(bl.name + ' unmarked');
-  }
-  updateRing();
-  renderRewards();
-}
-
-function updateActiveBanner(bl, s, e, nm) {
-  document.getElementById('curName').textContent = bl.name;
-  document.getElementById('curTime').textContent = bl.start + ' – ' + bl.end;
-  const pct = Math.round(((nm - s) / (e - s)) * 100);
-  document.getElementById('curFill').style.width = pct + '%';
-}
-
-function updateRing() {
-  const nm = nowMins();
-  const dayStart = toMins('05:00'), dayEnd = toMins('23:00');
-  const pct = Math.max(0, Math.min(Math.round((nm - dayStart) / (dayEnd - dayStart) * 100), 100));
-  const circ = 201;
-  document.getElementById('ringCircle').style.strokeDashoffset = circ - (pct / 100) * circ;
-  document.getElementById('ringPct').textContent = pct + '%';
-
-  const doneCt  = SCHEDULE.filter(b => !b.brk && isDone(b.id)).length;
-  const totalCt = SCHEDULE.filter(b => !b.brk).length;
-  document.getElementById('ringLabel').textContent = 'Day Progress — ' + pct + '%';
-  document.getElementById('ringDetail').textContent =
-    doneCt + ' of ' + totalCt + ' activities marked done';
-}
-
-/* refresh active highlight every minute */
-setInterval(() => {
-  const nm = nowMins();
-  SCHEDULE.forEach((bl, i) => {
-    const s = toMins(bl.start), e = toMins(bl.end);
-    const active = nm >= s && nm < e;
-    const row = document.getElementById('row_' + i);
-    if (!row) return;
-    row.classList.toggle('is-active', active);
-    if (active && !bl.brk) updateActiveBanner(bl, s, e, nm);
-  });
-  updateRing();
-}, 60000);
-
-/* ═══════════════════════════════════════════════════════
-   STREAKS
-   ═══════════════════════════════════════════════════════ */
-
-function recalcStreaks() {
-  STREAK_DEFS.forEach(def => {
-    const st = ST.streaks[def.key];
-    const allDone = def.ids.every(id => isDone(id));
-
-    if (allDone && st.last !== TODAY) {
-      const yest = new Date(); yest.setDate(yest.getDate() - 1);
-      const yKey = yest.toISOString().slice(0,10);
-      st.count = st.last === yKey ? st.count + 1 : 1;
-      st.last  = TODAY;
-      if (!st.hist) st.hist = [];
-      if (!st.hist.includes(TODAY)) st.hist.push(TODAY);
-    } else if (!allDone && st.last === TODAY) {
-      st.count = Math.max(0, st.count - 1);
-      const yest = new Date(); yest.setDate(yest.getDate() - 1);
-      st.last = st.count > 0 ? yest.toISOString().slice(0,10) : null;
-      st.hist = (st.hist || []).filter(d => d !== TODAY);
-    }
-  });
-  saveState();
-  renderStreaks();
-}
-
-function renderStreaks() {
-  const grid = document.getElementById('streakGrid');
-  grid.innerHTML = '';
-  STREAK_DEFS.forEach(def => {
-    const st  = ST.streaks[def.key];
-    const cnt = st.count || 0;
-    const pct = Math.min(Math.round((cnt / def.target) * 100), 100);
-
-    // Last 7 days
-    let weekHtml = '';
-    for (let i = 6; i >= 0; i--) {
-      const d = new Date(); d.setDate(d.getDate() - i);
-      const k = d.toISOString().slice(0,10);
-      const cls = k === TODAY ? 'today' : ((st.hist||[]).includes(k) ? 'done' : '');
-      weekHtml += `<div class="week-cell ${cls}"></div>`;
-    }
-
-    const card = document.createElement('div');
-    card.className = 'streak-card reveal';
-    card.innerHTML = `
-      <div class="streak-top">
-        <div>
-          <div class="streak-name">${def.name}</div>
-          <div class="streak-sub">Target: ${def.target} days</div>
-        </div>
-        <div>
-          <div class="streak-num ${cnt===0?'zero':''}">${cnt}</div>
-          <div class="streak-unit">day streak</div>
-        </div>
-      </div>
-      <div class="streak-bar">
-        <div class="streak-bar-fill" style="width:${pct}%"></div>
-      </div>
-      <div class="week-row">${weekHtml}</div>`;
-    grid.appendChild(card);
-  });
-  initReveal();
-}
-
-function maxStreak() {
-  return Math.max(0, ...Object.values(ST.streaks).map(s => s.count || 0));
-}
-
-/* ═══════════════════════════════════════════════════════
-   REWARDS
-   ═══════════════════════════════════════════════════════ */
-
-function renderRewards() {
-  const grid = document.getElementById('rewardGrid');
-  grid.innerHTML = '';
-  const top = maxStreak();
-
-  REWARDS.forEach(r => {
-    const unlocked = top >= r.days;
-    const card = document.createElement('div');
-    card.className = 'reward-card reveal ' + (unlocked ? 'unlocked' : 'locked');
-    card.innerHTML = `
-      <div class="reward-status ${unlocked?'unlocked':'locked'}">${unlocked ? 'UNLOCKED' : 'LOCKED'}</div>
-      <div class="reward-milestone">${r.days}-day milestone</div>
-      <div class="reward-title">${r.title}</div>
-      <p class="reward-desc">${r.desc}</p>
-      ${unlocked
-        ? `<div class="reward-gift">Reward: ${r.gift}</div>`
-        : `<div class="reward-locked-label">Reach a ${r.days}-day streak to unlock</div>`}`;
-    grid.appendChild(card);
-  });
-  initReveal();
-}
-
-/* ═══════════════════════════════════════════════════════
-   FINANCE CALCULATOR
-   ═══════════════════════════════════════════════════════ */
-
-function syncSlider(sid, vid) {
-  document.getElementById(vid).textContent = document.getElementById(sid).value + '%';
-}
-
-function calcFinance() {
-  const income = parseFloat(document.getElementById('incomeVal').value) || 0;
-  const needs  = +document.getElementById('slNeeds').value;
-  const sav    = +document.getElementById('slSavings').value;
-  const ast    = +document.getElementById('slAssets').value;
-  const emg    = +document.getElementById('slEmerg').value;
-  const tot    = needs + sav + ast + emg;
-
-  document.getElementById('pctWarn').style.display = tot > 100 ? 'block' : 'none';
-
-  const fmt = n => 'KES ' + Math.round(n).toLocaleString();
-  document.getElementById('rNeeds').textContent   = fmt(income * needs / 100);
-  document.getElementById('rSavings').textContent = fmt(income * sav  / 100);
-  document.getElementById('rAssets').textContent  = fmt(income * ast  / 100);
-  document.getElementById('rEmerg').textContent   = fmt(income * emg  / 100);
-
-  document.getElementById('ppNeeds').textContent   = needs + '%';
-  document.getElementById('ppSavings').textContent = sav   + '%';
-  document.getElementById('ppAssets').textContent  = ast   + '%';
-  document.getElementById('ppEmerg').textContent   = emg   + '%';
-
-  document.getElementById('lNeeds').textContent   = needs + '%';
-  document.getElementById('lSavings').textContent = sav   + '%';
-  document.getElementById('lAssets').textContent  = ast   + '%';
-  document.getElementById('lEmerg').textContent   = emg   + '%';
-
-  const ms = income * sav / 100;
-  document.getElementById('g1v').textContent = Math.round(ms).toLocaleString();
-  document.getElementById('g2v').textContent = Math.round(ms * 2).toLocaleString();
-  document.getElementById('g3v').textContent = Math.round(ms * 3).toLocaleString();
-  document.getElementById('g1f').style.width = Math.min(ms / 100000 * 100, 100) + '%';
-  document.getElementById('g2f').style.width = Math.min(ms * 2 / 50000 * 100, 100) + '%';
-  document.getElementById('g3f').style.width = Math.min(ms * 3 / 200000 * 100, 100) + '%';
-
-  drawDonut([needs, sav, ast, emg]);
-}
-
-function drawDonut(pcts) {
-  const svg = document.getElementById('donutSvg');
-  svg.innerHTML = '';
-  const cx = 50, cy = 50, r = 35, sw = 12;
-  const colors = ['#b8922a','#d4a93c','#6b5520','#4a7c5c'];
-  const circ = 2 * Math.PI * r;
-  const tot  = pcts.reduce((a,b)=>a+b,0) || 100;
-  let off = 0;
-
-  pcts.forEach((p, i) => {
-    const slice = (p / tot) * circ;
-    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
-    c.setAttribute('fill', 'none');
-    c.setAttribute('stroke', colors[i]);
-    c.setAttribute('stroke-width', sw);
-    c.setAttribute('stroke-dasharray', slice + ' ' + (circ - slice));
-    c.setAttribute('stroke-dashoffset', circ / 4 - off);
-    c.style.transform = 'rotate(-90deg)';
-    c.style.transformOrigin = cx + 'px ' + cy + 'px';
-    svg.appendChild(c);
-    off += slice;
-  });
-}
-
-// init sliders display
-['slNeeds','slSavings','slAssets','slEmerg'].forEach(id => {
-  const map = {slNeeds:'pvNeeds',slSavings:'pvSavings',slAssets:'pvAssets',slEmerg:'pvEmerg'};
-  syncSlider(id, map[id]);
-});
-drawDonut([50,20,20,10]);
-
-/* ═══════════════════════════════════════════════════════
-   PRAYER
-   ═══════════════════════════════════════════════════════ */
-
-const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(),0,0)) / 86400000);
-let vIdx = dayOfYear % VERSES.length;
-
-function showVerse(i) {
-  document.getElementById('verseText').textContent = '\u201c' + VERSES[i].text + '\u201d';
-  document.getElementById('verseRef').textContent  = '— ' + VERSES[i].ref;
-}
-function nextVerse() { vIdx = (vIdx+1) % VERSES.length; showVerse(vIdx); }
-function prevVerse() { vIdx = (vIdx-1+VERSES.length) % VERSES.length; showVerse(vIdx); }
-function randVerse() { vIdx = Math.floor(Math.random()*VERSES.length); showVerse(vIdx); }
-showVerse(vIdx);
-
-/* ═══════════════════════════════════════════════════════
-   MOTIVATION
-   ═══════════════════════════════════════════════════════ */
-
-let qIdx = dayOfYear % QUOTES.length;
-
-function buildDots() {
-  const c = document.getElementById('qDots');
-  c.innerHTML = '';
-  QUOTES.forEach((_,i) => {
-    const d = document.createElement('div');
-    d.className = 'q-dot' + (i===qIdx?' active':'');
-    d.onclick = () => { qIdx=i; showQuote(qIdx); };
-    c.appendChild(d);
-  });
-}
-function showQuote(i) {
-  document.getElementById('quoteText').textContent   = QUOTES[i].text;
-  document.getElementById('quoteAuthor').textContent = '— ' + QUOTES[i].author;
-  buildDots();
-}
-function nextQuote() { qIdx=(qIdx+1)%QUOTES.length; showQuote(qIdx); }
-function prevQuote() { qIdx=(qIdx-1+QUOTES.length)%QUOTES.length; showQuote(qIdx); }
-showQuote(qIdx);
-setInterval(nextQuote, 15000);
-
-/* ═══════════════════════════════════════════════════════
-   TOAST
-   ═══════════════════════════════════════════════════════ */
-
-let toastT;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'show';
-  clearTimeout(toastT);
-  toastT = setTimeout(() => {
-    t.className = 'hide';
-    setTimeout(() => t.className = '', 350);
-  }, 2500);
-}
-
-/* ═══════════════════════════════════════════════════════
-   NAV DOTS
-   ═══════════════════════════════════════════════════════ */
-
-function goTo(id) { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
-
-const SEC_IDS = ['hero','schedule','streaks','rewards','finance','prayer','motivation'];
-const pips = document.querySelectorAll('.nav-pip');
-
-const secObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const i = SEC_IDS.indexOf(e.target.id);
-      pips.forEach(p => p.classList.remove('active'));
-      if (i >= 0) pips[i].classList.add('active');
-    }
-  });
-}, {threshold:0.35});
-SEC_IDS.forEach(id => { const el=document.getElementById(id); if(el) secObs.observe(el); });
-
-/* ═══════════════════════════════════════════════════════
-   SCROLL REVEAL
-   ═══════════════════════════════════════════════════════ */
-
+// ====== SCROLL REVEAL ======
 function initReveal() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 50);
-        obs.unobserve(e.target);
-      }
-    });
-  }, {threshold:0.07});
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+  const els = document.querySelectorAll('.page.active .reveal');
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el => obs.observe(el));
+  } else {
+    els.forEach(el => el.classList.add('revealed'));
+  }
 }
 
-/* ═══════════════════════════════════════════════════════
-   INIT
-   ═══════════════════════════════════════════════════════ */
+// ====== COUNTERS ======
+function animateCounter(el, target, duration) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { el.textContent = target + (el.dataset.suffix || ''); clearInterval(timer); }
+    else { el.textContent = Math.floor(start) + (el.dataset.suffix || ''); }
+  }, 16);
+}
 
-buildSchedule();
-renderStreaks();
-renderRewards();
-initReveal();
-calcFinance();
+function initCounters() {
+  document.querySelectorAll('.page.active .counter').forEach(el => {
+    if (el.dataset.animated) return;
+    el.dataset.animated = '1';
+    animateCounter(el, parseInt(el.dataset.target, 10), 1200);
+  });
+}
+
+// ====== FORMS ======
+function handleContactForm(e) {
+  e.preventDefault();
+  const toast = document.getElementById('toast');
+  toast.style.opacity = '1';
+  setTimeout(() => toast.style.opacity = '0', 3000);
+  e.target.reset();
+}
+
+function handleAdmissionsForm(e) {
+  e.preventDefault();
+  document.getElementById('admissionsForm').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+
+// ====== INIT ======
+document.addEventListener('DOMContentLoaded', function() {
+  initReveal();
+  initCounters();
+});
 </script>
 </body>
 </html>
